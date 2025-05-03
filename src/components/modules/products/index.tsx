@@ -20,8 +20,8 @@ const AllProducts = () => {
 
   return (
     <div className="m-4 md:m-10">
-      <h1 className="text-3xl font-semibold text-center m-4 md:m-8">
-        Medicines
+      <h1 className="text-3xl text-center m-4 md:m-8 font-bold text-[#4F46E5]">
+        List of Medicines
       </h1>
 
       {/* Mobile Filter Toggle Button */}

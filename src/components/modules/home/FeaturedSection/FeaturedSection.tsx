@@ -31,7 +31,7 @@ const FeaturedSection = () => {
   return (
     <section className="py-12 container mx-auto px-4 md:px-0">
       <div className="mb-8 text-center">
-        <h2 className="text-2xl md:text-3xl font-bold text-primary mb-2">
+        <h2 className="text-2xl md:text-3xl font-bold text-[#4F46E5] mb-2">
           Featured Products
         </h2>
         <p className="text-sm text-muted-foreground">

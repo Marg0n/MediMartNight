@@ -10,12 +10,12 @@ const AboutSection = () => {
             <h1 className="text-[40px] lg:text-[40px] leading-[45px] lg:leading-[55px] font-[500]">
               What is{" "}
               <span className="text-rose-500 font-semibold">
-                Medi<span className="text-primary font-semibold">Mart</span>
+                Medi<span className="text-[#4F46E5] font-semibold">Mart</span>
               </span>
             </h1>
             <p className="text-[16px] mt-2">
               <span className="text-rose-500 font-semibold">
-                Medi<span className="text-primary font-semibold">Mart</span>
+                Medi<span className="text-[#4F46E5] font-semibold">Mart</span>
               </span>{" "}
               is the very first premium online medicine brand manufactured in
               Bangladesh. The brand is owned by Meghna, the number 1 premium
@@ -56,13 +56,13 @@ const AboutSection = () => {
           <div className="px-8 mt-8 lg:mt-0 w-full lg:w-[50%]">
             <h1 className="text-[40px] lg:text-[40px] leading-[45px] lg:leading-[55px] font-[500]">
               <span className="text-rose-500 font-semibold">
-                Medi<span className="text-primary font-semibold">Mart</span>
+                Medi<span className="text-[#4F46E5] font-semibold">Mart</span>
               </span>{" "}
               Market Position
             </h1>
             <p className="text-[16px] mt-2">
               <span className="text-rose-500 font-semibold">
-                Medi<span className="text-primary font-semibold">Mart</span>
+                Medi<span className="text-[#4F46E5] font-semibold">Mart</span>
               </span>{" "}
               Currently, is the most well known medicine brand in Bangladesh,
               and one of the few medicine brands catering to the premium
@@ -79,17 +79,30 @@ const AboutSection = () => {
         <header className="flex h-full lg:flex-row flex-col gap-[50px] lg:gap-0 justify-center items-center lg:mt-3 py-6">
           <div className="px-8 mt-8 lg:mt-0 w-full lg:w-[50%]">
             <h1 className="text-[40px] lg:text-[40px] leading-[45px] lg:leading-[55px] font-[500]">
-            <span className="text-rose-500 font-semibold">Medi<span className="text-primary font-semibold">Mart</span></span>  understand your needs
+              <span className="text-rose-500 font-semibold">
+                Medi<span className="text-[#4F46E5] font-semibold">Mart</span>
+              </span>{" "}
+              understand your needs
             </h1>
             <p className="text-[16px] mt-2">
-            <span className="text-rose-500 font-semibold">Medi<span className="text-primary font-semibold">Mart</span></span> Considering prevailing busy city life where traffic, lack of parking, non-availability of medicines, we want to ensure Convenience to our valued customers. With easy access to reliable drug information, our customers will get to know all about medicine both locally produced and imported from abroad. Being a client of medimart.com.bd, customer will get regular refill reminders, alternative medicine options staying at home to Make Your Life Easier.
+              <span className="text-rose-500 font-semibold">
+                Medi<span className="text-[#4F46E5] font-semibold">Mart</span>
+              </span>{" "}
+              Considering prevailing busy city life where traffic, lack of
+              parking, non-availability of medicines, we want to ensure
+              Convenience to our valued customers. With easy access to reliable
+              drug information, our customers will get to know all about
+              medicine both locally produced and imported from abroad. Being a
+              client of medimart.com.bd, customer will get regular refill
+              reminders, alternative medicine options staying at home to Make
+              Your Life Easier.
             </p>
           </div>
 
           {/* image */}
           <div className="w-full lg:w-[50%] object-cover p-10">
             <Image
-              src='/images/img/us3.jpg'
+              src="/images/img/us3.jpg"
               alt="image"
               width={300}
               height={200}
@@ -104,7 +117,7 @@ const AboutSection = () => {
           {/* image */}
           <div className="w-full lg:w-[50%] object-cover p-10">
             <Image
-              src='/images/img/us4.png'
+              src="/images/img/us4.png"
               alt="image"
               width={300}
               height={200}
@@ -113,10 +126,22 @@ const AboutSection = () => {
           </div>
           <div className="px-8 mt-8 lg:mt-0 w-full lg:w-[50%]">
             <h1 className="text-[40px] lg:text-[40px] leading-[45px] lg:leading-[55px] font-[500]">
-            Providing Quality  is <span className="text-rose-500 font-semibold">Medi<span className="text-primary font-semibold">Mart</span></span>  Priority
+              Providing Quality is{" "}
+              <span className="text-rose-500 font-semibold">
+                Medi<span className="text-[#4F46E5] font-semibold">Mart</span>
+              </span>{" "}
+              Priority
             </h1>
             <p className="text-[16px] mt-2">
-            At <span className="text-rose-500 font-semibold">Medi<span className="text-primary font-semibold">Mart</span></span>  we have the largest inventory in Bangladesh with over 7 lakh medicines available at the best prices. We are your one-stop destination for other healthcare products as well, such as over the counter pharmaceuticals, healthcare devices and sexual wellbeing products.
+              At{" "}
+              <span className="text-rose-500 font-semibold">
+                Medi<span className="text-[#4F46E5] font-semibold">Mart</span>
+              </span>{" "}
+              we have the largest inventory in Bangladesh with over 7 lakh
+              medicines available at the best prices. We are your one-stop
+              destination for other healthcare products as well, such as over
+              the counter pharmaceuticals, healthcare devices and sexual
+              wellbeing products.
             </p>
           </div>
         </header>
@@ -126,17 +151,28 @@ const AboutSection = () => {
         <header className="flex h-full lg:flex-row flex-col gap-[50px] lg:gap-0 justify-center items-center lg:mt-3 py-6">
           <div className="px-8 mt-8 lg:mt-0 w-full lg:w-[50%]">
             <h1 className="text-[40px] lg:text-[40px] leading-[45px] lg:leading-[55px] font-[500]">
-            The Services <span className="text-rose-500 font-semibold">Medi<span className="text-primary font-semibold">Mart</span></span>  Offer
+              The Services{" "}
+              <span className="text-rose-500 font-semibold">
+                Medi<span className="text-[#4F46E5] font-semibold">Mart</span>
+              </span>{" "}
+              Offer
             </h1>
             <p className="text-[16px] mt-2">
-            <span className="text-rose-500 font-semibold">Medi<span className="text-primary font-semibold">Mart</span></span>  want to provide a 360-degree solution for your wellbeing. Our delivery is spread all over Bangladesh. Our online doctors are well trained and at your service. Our experienced Pharmacists are A Grade certified who cater to your problems at all times of the day.
+              <span className="text-rose-500 font-semibold">
+                Medi<span className="text-[#4F46E5] font-semibold">Mart</span>
+              </span>{" "}
+              want to provide a 360-degree solution for your wellbeing. Our
+              delivery is spread all over Bangladesh. Our online doctors are
+              well trained and at your service. Our experienced Pharmacists are
+              A Grade certified who cater to your problems at all times of the
+              day.
             </p>
           </div>
 
           {/* image */}
           <div className="w-full lg:w-[50%] object-cover p-10">
             <Image
-              src='/images/img/us5.jpg'
+              src="/images/img/us5.jpg"
               alt="image"
               width={300}
               height={200}
@@ -151,7 +187,7 @@ const AboutSection = () => {
           {/* image */}
           <div className="w-full lg:w-[50%] object-cover p-10">
             <Image
-              src='/images/img/us6.jpg'
+              src="/images/img/us6.jpg"
               alt="image"
               width={300}
               height={200}
@@ -160,16 +196,28 @@ const AboutSection = () => {
           </div>
           <div className="px-8 mt-8 lg:mt-0 w-full lg:w-[50%]">
             <h1 className="text-[40px] lg:text-[40px] leading-[45px] lg:leading-[55px] font-[500]">
-            <span className="text-rose-500 font-semibold">Medi<span className="text-primary font-semibold">Mart</span></span> Online Pharmacy
+              <span className="text-rose-500 font-semibold">
+                Medi<span className="text-[#4F46E5] font-semibold">Mart</span>
+              </span>{" "}
+              Online Pharmacy
             </h1>
             <p className="text-[16px] mt-2">
-            <span className="text-rose-500 font-semibold">Medi<span className="text-primary font-semibold">Mart</span></span> online model pharmacy can be accessed easily through our website where customers can upload their prescription. Our medicine inventories are directly supplied form the largest pharmaceutical companies and thus we ensure longest expiry dates for our all medicines and products and also authentic medicines.The model pharmacies are supervised by A Category Pharmacists who ensures the best service for our customers.
+              <span className="text-rose-500 font-semibold">
+                Medi<span className="text-[#4F46E5] font-semibold">Mart</span>
+              </span>{" "}
+              online model pharmacy can be accessed easily through our website
+              where customers can upload their prescription. Our medicine
+              inventories are directly supplied form the largest pharmaceutical
+              companies and thus we ensure longest expiry dates for our all
+              medicines and products and also authentic medicines.The model
+              pharmacies are supervised by A Category Pharmacists who ensures
+              the best service for our customers.
             </p>
           </div>
         </header>
       </div>
-        </div>
-    );
+    </div>
+  );
 };
 
 export default AboutSection;

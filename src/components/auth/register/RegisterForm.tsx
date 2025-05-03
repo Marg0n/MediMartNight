@@ -60,9 +60,11 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className="border-2 border-gray-300 rounded-xl flex-grow max-w-md w-full p-5">
+    <div className="border-2 border-gray-300 rounded-xl flex-grow max-w-md w-full p-5 space-y-6">
       <div className="flex items-center space-x-4 ">
-        <Logo />
+        <Link href='/'>
+          <Logo />
+        </Link>
         <div>
           <h1 className="text-xl font-semibold">Register</h1>
           <p className="font-extralight text-sm text-gray-600">
@@ -171,7 +173,7 @@ export default function RegisterForm() {
       </Form>
       <p className="text-sm text-gray-600 text-center my-3">
         Already have an account?
-        <Link href="/login" className="text-primary ml-2">
+        <Link href="/login" className="text-[#4F46E5] ml-2">
           Login
         </Link>
       </p>

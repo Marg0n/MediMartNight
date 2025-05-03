@@ -61,7 +61,7 @@ const Navbar = () => {
     <header className="w-full border-b bg-white dark:bg-black sticky top-0 z-50 px-2">
       <div className="container mx-auto flex items-center justify-between py-4 px-4 md:px-0">
         {/* Logo */}
-        <Link href="/" className="text-2xl font-bold text-primary">
+        <Link href="/" className="text-2xl font-bold text-[#4F46E5]">
           {/* MediMart logo */}
           <AnimatedLogo />
         </Link>
@@ -72,7 +72,7 @@ const Navbar = () => {
             <Link
               key={item.href}
               href={item.href}
-              className="text-sm text-muted-foreground hover:text-primary transition"
+              className="text-sm text-muted-foreground hover:text-[#4F46E5] transition"
             >
               {item.label}
             </Link>
@@ -103,9 +103,7 @@ const Navbar = () => {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Link href='/profile'>
-                    Profile
-                  </Link>
+                  <Link href="/profile">Profile</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
@@ -126,7 +124,7 @@ const Navbar = () => {
             </Link>
           )}
           <Link href={"/cart"}>
-            <ShoppingCart className="cursor-pointer hover:scale-105"/>
+            <ShoppingCart className="cursor-pointer hover:scale-105" />
           </Link>
         </nav>
 
@@ -153,7 +151,7 @@ const Navbar = () => {
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-sm text-muted-foreground hover:text-primary transition"
+                className="text-sm text-muted-foreground hover:text-[#4F46E5] transition"
                 onClick={() => setMenuOpen(false)}
               >
                 {item.label}

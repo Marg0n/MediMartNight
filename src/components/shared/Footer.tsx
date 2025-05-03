@@ -10,33 +10,33 @@ const Footer = () => {
         <div className="space-y-3">
           <Logo />
           <p className="text-sm leading-relaxed max-w-sm">
-            <span className="text-primary font-semibold">MediMart</span> is your
-            trusted online store for medical supplies, health essentials, and
-            wellness products. Your health is our priority.
+            <span className="text-[#4F46E5] font-semibold">MediMart</span> is
+            your trusted online store for medical supplies, health essentials,
+            and wellness products. Your health is our priority.
           </p>
         </div>
 
         {/* Quick Links */}
         <div>
-          <h4 className="text-primary font-semibold mb-3">Quick Links</h4>
+          <h4 className="text-[#4F46E5] font-semibold mb-3">Quick Links</h4>
           <ul className="space-y-2 text-sm">
             <li>
-              <Link href="/" className="hover:text-primary transition">
+              <Link href="/" className="hover:text-[#4F46E5] transition">
                 Home
               </Link>
             </li>
             <li>
-              <Link href="/shop" className="hover:text-primary transition">
+              <Link href="/shop" className="hover:text-[#4F46E5] transition">
                 Products Shop
               </Link>
             </li>
             <li>
-              <Link href="/about" className="hover:text-primary transition">
+              <Link href="/about" className="hover:text-[#4F46E5] transition">
                 About Us
               </Link>
             </li>
             {/* <li>
-              <Link href="/policy" className="hover:text-primary transition">
+              <Link href="/policy" className="hover:text-[#4F46E5] transition">
                 Policies
               </Link>
             </li> */}
@@ -46,15 +46,15 @@ const Footer = () => {
         {/* Legal & Social */}
         <div className="space-y-4">
           <div className="space-x-4 text-sm">
-            <Link href="/privacy" className="hover:text-primary transition">
+            <Link href="/privacy" className="hover:text-[#4F46E5] transition">
               Privacy Policy
             </Link>
-            <Link href="/terms" className="hover:text-primary transition">
+            <Link href="/terms" className="hover:text-[#4F46E5] transition">
               Terms of Service
             </Link>
           </div>
 
-          <div className="flex gap-4 text-primary mt-4">
+          <div className="flex gap-4 text-[#4F46E5] mt-4">
             <a
               href="https://facebook.com"
               target="_blank"
@@ -86,8 +86,8 @@ const Footer = () => {
       {/* Bottom line */}
       <div className="text-center text-xs text-muted-foreground mt-10 border-t pt-4 cursor-pointer">
         &copy; {new Date().getFullYear()}{" "}
-        <span className="text-primary font-semibold">MediMart</span>. All rights
-        reserved.
+        <span className="text-[#4F46E5] font-semibold">MediMart</span>. All
+        rights reserved.
       </div>
     </footer>
   );
