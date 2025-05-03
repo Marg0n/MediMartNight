@@ -5,7 +5,7 @@ import Link from "next/link";
 const Footer = () => {
   return (
     <footer className="bg-muted text-muted-foreground border-t mt-10 pt-10 pb-6">
-      <div className="container mx-auto px-4 md:px-0 grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+      <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
         {/* Logo & Description */}
         <div className="space-y-3">
           <Logo />
@@ -26,8 +26,8 @@ const Footer = () => {
               </Link>
             </li>
             <li>
-              <Link href="/products" className="hover:text-primary transition">
-                Products
+              <Link href="/shop" className="hover:text-primary transition">
+                Products Shop
               </Link>
             </li>
             <li>
@@ -35,17 +35,17 @@ const Footer = () => {
                 About Us
               </Link>
             </li>
-            <li>
-              <Link href="/contact" className="hover:text-primary transition">
-                Contact
+            {/* <li>
+              <Link href="/policy" className="hover:text-primary transition">
+                Policies
               </Link>
-            </li>
+            </li> */}
           </ul>
         </div>
 
         {/* Legal & Social */}
         <div className="space-y-4">
-          <div className="space-y-2 text-sm">
+          <div className="space-x-4 text-sm">
             <Link href="/privacy" className="hover:text-primary transition">
               Privacy Policy
             </Link>
