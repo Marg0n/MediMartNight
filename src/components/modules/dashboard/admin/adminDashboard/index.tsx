@@ -19,31 +19,31 @@ const AdminDashboard = () => {
         <StatCard
           title="Total Orders"
           value="120"
-          icon={<ClipboardListIcon className="w-8 h-8 text-white" />}
+          icon={<ClipboardListIcon className="w-8 h-8 text-black" />}
           color="from-indigo-500 to-purple-500"
         />
         <StatCard
           title="Pending Approvals"
           value="15"
-          icon={<ChartBarIcon className="w-8 h-8 text-white" />}
+          icon={<ChartBarIcon className="w-8 h-8 text-black" />}
           color="from-yellow-500 to-orange-500"
         />
         <StatCard
           title="Out of Stock"
           value={"5"}
-          icon={<ShoppingBagIcon className="w-8 h-8 text-white" />}
+          icon={<ShoppingBagIcon className="w-8 h-8 text-black" />}
           color="from-red-500 to-pink-500"
         />
         <StatCard
           title="Total Users"
           value="300"
-          icon={<User className="w-8 h-8 text-white" />}
+          icon={<User className="w-8 h-8 text-black" />}
           color="from-green-400 to-emerald-500"
         />
         <StatCard
           title="Revenue"
           value="$12,000"
-          icon={<DollarSignIcon className="w-8 h-8 text-white" />}
+          icon={<DollarSignIcon className="w-8 h-8 text-black" />}
           color="from-blue-500 to-cyan-500"
         />
       </div>
