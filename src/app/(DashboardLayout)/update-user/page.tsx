@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { updateUser } from '@/services/users'; 
 import { useUser } from '@/contexts/UserContext';
 import { toast } from 'sonner';
+import CustomButton from '@/components/shared/CustomButton';
 
 const UpdateUserProfilePage = () => {
   const { user, isLoading } = useUser();
@@ -72,12 +73,11 @@ const UpdateUserProfilePage = () => {
 
         {!editing ? (
           <div className="flex justify-center">
-            <button 
-              onClick={() => setEditing(true)} 
-              className="bg-blue-600 text-white px-6 py-3 rounded-lg transition duration-300 transform hover:bg-blue-700 hover:scale-105"
-            >
-              Edit Profile
-            </button>
+            <CustomButton
+              textName='Edit Profile'
+              handleAnything={() => setEditing(true)}
+
+            />
           </div>
         ) : (
           <div className="flex justify-center gap-4">

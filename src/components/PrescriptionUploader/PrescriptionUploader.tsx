@@ -14,7 +14,7 @@ export default function PrescriptionUploader({
   // orderId,
   prescriptionUrl,
   // onUploaded,
-}: Props) {
+}:Props) {
   // const [uploading, setUploading] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [filePreview, setFilePreview] = useState<string | null>(null);
@@ -131,7 +131,7 @@ export default function PrescriptionUploader({
           {/* <button
             onClick={handleUpload}
             disabled={uploading || !file}
-            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-[#4F46E5] text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {uploading ? "Uploading..." : "Upload Prescription"}
           </button> */}

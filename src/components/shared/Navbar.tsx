@@ -90,7 +90,7 @@ const Navbar = () => {
                   {user?.name}{" "}
                   <Badge
                     className={
-                      user?.role === "admin" ? `bg-purple-600` : `bg-blue-600`
+                      user?.role === "admin" ? `bg-purple-400` : `bg-[#4F46E5]`
                     }
                   >
                     {user?.role}

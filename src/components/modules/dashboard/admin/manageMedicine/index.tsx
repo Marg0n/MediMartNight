@@ -22,7 +22,7 @@ const ManageMedicine = () => {
         const data = await getAllProducts(
           page.toString(),
           limit.toString(),
-          {}
+          {},
         );
         setMedicines(data?.data?.result || []);
         const totalItems = data?.data?.meta?.total || 0;
@@ -96,7 +96,7 @@ const ManageMedicine = () => {
                   >
                     {title}
                   </th>
-                )
+                ),
               )}
             </tr>
           </thead>
@@ -141,7 +141,7 @@ const ManageMedicine = () => {
                   </td>
                   <td className=" text-center">
                     <Link href={`/admin/medicines/${med._id}`}>
-                      <div className="inline-flex items-center justify-center p-2 text-blue-600 hover:text-white hover:bg-blue-600 rounded-full transition">
+                      <div className="inline-flex items-center justify-center p-2 text-blue-600 hover:text-white hover:bg-[#4F46E5] rounded-full transition">
                         <PencilIcon className="h-5 w-5" />
                       </div>
                     </Link>
