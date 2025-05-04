@@ -18,7 +18,7 @@ export interface IOrderDB {
   products: IProductItem[];
   user: IUser;
   totalPrice: number;
-  shippingStatus: "PENDING" | "PROCESSING" | "SHIPPED" | "DELIVERED" | string;
+  shippingStatus: "PENDING" | "PROCESSING" | "SHIPPED" | "DELIVERED" | "CANCELLED" | string;
   paymentStatus: "PAID" | "UNPAID" | "REFUNDED" | string;
   transactionId: string;
   isDeleted: boolean;

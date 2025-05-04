@@ -3,6 +3,8 @@
 "use client";
 
 import { getAllOrders } from "@/services/orders";
+import { getAllUsers } from "@/services/users";
+import { IUser } from "@/types";
 import { IOrderDB } from "@/types/order";
 import {
   ChartBarIcon,
@@ -10,6 +12,8 @@ import {
   DollarSignIcon,
   ShoppingBagIcon,
   User,
+  LayoutList,
+  RotateCcw,
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -22,17 +26,25 @@ interface IOrderStats {
 }
 
 const AdminDashboard = () => {
-  //* state for oreders
+  //* state for orders
   const [orders, setOrders] = useState<IOrderStats>();
   const [loading, setLoading] = useState(true);
+
+  //* token
+  const token = localStorage.getItem("authToken");
+
+  //* all users' data
+  const [allUsers, setAllUsers] = useState<IUser[]>([]);
 
   //* fetch orders
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const res = await getAllOrders(1,100); 
-        console.log(res.data)
+        const res = await getAllOrders(1, 100);
+        const resUsers = await getAllUsers(token as string);
+        console.log(resUsers);
         setOrders(res?.data);
+        setAllUsers(resUsers?.data);
       } catch (err: any) {
         console.error("Failed to load orders:", err);
       } finally {
@@ -43,13 +55,30 @@ const AdminDashboard = () => {
     fetchOrders();
   }, []);
 
-  console.log('data',orders)
+  console.log("data", orders);
+  console.log("users data", allUsers);
 
   const stats = {
     ordersPlaced: orders?.data.length,
-    pendingDeliveries: orders?.data.filter((order) => order.shippingStatus === "PENDING").length,
-    delivered: orders?.data.filter((order) => order.shippingStatus === "DELIVERED").length,
-    outOfStock: orders?.data.filter((order) => order.products.some((item) => item.product && item.product.inStock === false)).length,
+    pendingDeliveries: orders?.data.filter(
+      (order) => order.shippingStatus === "PENDING",
+    ).length,
+    delivered: orders?.data.filter(
+      (order) => order.shippingStatus === "DELIVERED",
+    ).length,
+    outOfStock: orders?.data.filter((order) =>
+      order.products.some(
+        (item) => item.product && item.product.inStock === false,
+      ),
+    ).length,
+    revenue: orders?.data
+      .filter((order) => order.paymentStatus === "PAID")
+      .reduce((acc, order) => acc + order.totalPrice, 0),
+    paymentPending: orders?.data.filter(
+      (order) => order.paymentStatus === "UNPAID",
+    ).length,
+    refunded: orders?.data.filter((order) => order.paymentStatus === "REFUNDED")
+      .length,
   };
 
   return (
@@ -60,33 +89,45 @@ const AdminDashboard = () => {
         <StatCard
           title="Total Orders"
           // value={orders?.totalOrders.toString() as string}
-          value={stats.ordersPlaced?.toString() as string || 'N/A'}
+          value={(stats.ordersPlaced?.toString() as string) || "N/A"}
           icon={<ClipboardListIcon className="w-8 h-8 text-black" />}
           color="from-indigo-500 to-purple-500"
         />
         <StatCard
           title="Pending Approvals"
-          value={stats.pendingDeliveries?.toString() as string || 'N/A'}
+          value={(stats.pendingDeliveries?.toString() as string) || "N/A"}
           icon={<ChartBarIcon className="w-8 h-8 text-black" />}
           color="from-yellow-500 to-orange-500"
         />
         <StatCard
           title="Out of Stock"
-          value={stats.outOfStock?.toString() as string || 'N/A'}
+          value={(stats.outOfStock?.toString() as string) || "N/A"}
           icon={<ShoppingBagIcon className="w-8 h-8 text-black" />}
           color="from-red-500 to-pink-500"
         />
         <StatCard
           title="Total Users"
-          value="300"
+          value={(allUsers?.length?.toString() as string) || "N/A"}
           icon={<User className="w-8 h-8 text-black" />}
-          color="from-green-400 to-emerald-500"
+          color="from-green-500 to-emerald-600"
         />
         <StatCard
           title="Revenue"
-          value="$12,000"
+          value={(stats?.revenue?.toString() as string) || "N/A"}
           icon={<DollarSignIcon className="w-8 h-8 text-black" />}
           color="from-blue-500 to-cyan-500"
+        />
+        <StatCard
+          title="Pending Payment"
+          value={(stats?.paymentPending?.toString() as string) || "N/A"}
+          icon={<LayoutList className="w-8 h-8 text-black" />}
+          color="from-green-500 to-red-500"
+        />
+        <StatCard
+          title="Refunded"
+          value={(stats?.refunded?.toString() as string) || "N/A"}
+          icon={<RotateCcw className="w-8 h-8 text-black" />}
+          color="from-red-500 to-yellow-500"
         />
       </div>
 
