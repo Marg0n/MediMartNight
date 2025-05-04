@@ -1,6 +1,9 @@
-// app/admin/page.tsx
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { getAllOrders } from "@/services/orders";
+import { IOrderDB } from "@/types/order";
 import {
   ChartBarIcon,
   ClipboardListIcon,
@@ -9,8 +12,46 @@ import {
   User,
 } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+
+interface IOrderStats {
+  totalOrders: number;
+  currentPage: number;
+  totalPages: number;
+  data: IOrderDB[];
+}
 
 const AdminDashboard = () => {
+  //* state for oreders
+  const [orders, setOrders] = useState<IOrderStats>();
+  const [loading, setLoading] = useState(true);
+
+  //* fetch orders
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const res = await getAllOrders(1,100); 
+        console.log(res.data)
+        setOrders(res?.data);
+      } catch (err: any) {
+        console.error("Failed to load orders:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOrders();
+  }, []);
+
+  console.log('data',orders)
+
+  const stats = {
+    ordersPlaced: orders?.data.length,
+    pendingDeliveries: orders?.data.filter((order) => order.shippingStatus === "PENDING").length,
+    delivered: orders?.data.filter((order) => order.shippingStatus === "DELIVERED").length,
+    outOfStock: orders?.data.filter((order) => order.products.some((item) => item.product && item.product.inStock === false)).length,
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <h1 className="text-3xl font-bold text-gray-800 mb-8">Admin Dashboard</h1>
@@ -18,19 +59,20 @@ const AdminDashboard = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
         <StatCard
           title="Total Orders"
-          value="120"
+          // value={orders?.totalOrders.toString() as string}
+          value={stats.ordersPlaced?.toString() as string || 'N/A'}
           icon={<ClipboardListIcon className="w-8 h-8 text-black" />}
           color="from-indigo-500 to-purple-500"
         />
         <StatCard
           title="Pending Approvals"
-          value="15"
+          value={stats.pendingDeliveries?.toString() as string || 'N/A'}
           icon={<ChartBarIcon className="w-8 h-8 text-black" />}
           color="from-yellow-500 to-orange-500"
         />
         <StatCard
           title="Out of Stock"
-          value={"5"}
+          value={stats.outOfStock?.toString() as string || 'N/A'}
           icon={<ShoppingBagIcon className="w-8 h-8 text-black" />}
           color="from-red-500 to-pink-500"
         />

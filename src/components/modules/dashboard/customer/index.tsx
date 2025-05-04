@@ -31,7 +31,7 @@ const UserDashboard = () => {
     };
 
     fetchOrders();
-  }, [user]); // ✅ Add dependency on user
+  }, [user]); // Add dependency on user
 
   const stats = {
     ordersPlaced: orders.length,

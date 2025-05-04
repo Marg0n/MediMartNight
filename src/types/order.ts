@@ -8,6 +8,7 @@ export interface IProductItem {
   product?: TMedicine;
   price?: number;
   name?: string;
+  inStock?: boolean;
 }
 
 export type ShippingStatus = "PENDING" | "SHIPPED" | "DELIVERED" | "CANCELLED"
