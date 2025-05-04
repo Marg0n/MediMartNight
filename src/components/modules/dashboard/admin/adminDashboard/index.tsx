@@ -17,7 +17,10 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Chart } from './charts/Chart';
 
+
+//* define interface for the order
 interface IOrderStats {
   totalOrders: number;
   currentPage: number;
@@ -42,7 +45,7 @@ const AdminDashboard = () => {
       try {
         const res = await getAllOrders(1, 100);
         const resUsers = await getAllUsers(token as string);
-        console.log(resUsers);
+        // console.log(resUsers);
         setOrders(res?.data);
         setAllUsers(resUsers?.data);
       } catch (err: any) {
@@ -55,8 +58,8 @@ const AdminDashboard = () => {
     fetchOrders();
   }, []);
 
-  console.log("data", orders);
-  console.log("users data", allUsers);
+  // console.log("data", orders);
+  // console.log("users data", allUsers);
 
   const stats = {
     ordersPlaced: orders?.data.length,
@@ -74,12 +77,31 @@ const AdminDashboard = () => {
     revenue: orders?.data
       .filter((order) => order.paymentStatus === "PAID")
       .reduce((acc, order) => acc + order.totalPrice, 0),
+    totalSold: orders?.data
+      .reduce((acc, order) => acc + order.totalPrice, 0),
     paymentPending: orders?.data.filter(
       (order) => order.paymentStatus === "UNPAID",
     ).length,
     refunded: orders?.data.filter((order) => order.paymentStatus === "REFUNDED")
       .length,
   };
+
+  //* for the charts
+  const ordersByDate = orders?.data.reduce((acc: Record<string, any>, order) => {
+    const date = new Date(order?.createdAt as string).toISOString().split("T")[0]; // "YYYY-MM-DD"
+    if (!acc[date]) {
+      acc[date] = { date, PAID: 0, UNPAID: 0, REFUNDED: 0 };
+    }
+    if (order.paymentStatus in acc[date]) {
+      acc[date][order.paymentStatus]++;
+    }
+    return acc;
+  }, {});
+  
+  const chartData = Object.values(ordersByDate || {}).sort(
+    (a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime()
+  );
+  // console.log("chart data", chartData);
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
@@ -118,6 +140,12 @@ const AdminDashboard = () => {
           color="from-blue-500 to-cyan-500"
         />
         <StatCard
+          title="Total Sold"
+          value={(stats?.totalSold?.toString() as string) || "N/A"}
+          icon={<DollarSignIcon className="w-8 h-8 text-black" />}
+          color="from-purple-500 to-green-500"
+        />
+        <StatCard
           title="Pending Payment"
           value={(stats?.paymentPending?.toString() as string) || "N/A"}
           icon={<LayoutList className="w-8 h-8 text-black" />}
@@ -135,6 +163,10 @@ const AdminDashboard = () => {
         <LinkCard title="Manage Medicines" href="/admin/medicines" />
         <LinkCard title="Manage Orders" href="/admin/orders" />
         <LinkCard title="Manage Users" href="/admin/users" />
+      </div>
+
+      <div className="mt-10">
+        <Chart chartData={chartData} />
       </div>
     </div>
   );
