@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 import CustomButton from '@/components/shared/CustomButton';
 
 const UpdateUserProfilePage = () => {
-  const { user, isLoading } = useUser();
+  const { user, isLoading, setUser } = useUser();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -43,6 +43,12 @@ const UpdateUserProfilePage = () => {
       const res = await updateUser(user._id, formData, token);
       toast.success('Profile updated');
       setEditing(false);
+
+      //! Update the user context with the new name
+      setUser({
+        ...user,             // keep existing user fields
+        name: formData.name  // update only the changed name
+      });
     } catch {
       toast.error('Update failed');
     }
@@ -51,7 +57,7 @@ const UpdateUserProfilePage = () => {
   if (isLoading || !user) return <div className="p-8">Loading profile...</div>;
 
   return (
-    <div className="max-w-2xl mx-auto p-8 bg-white shadow-xl rounded-xl">
+    <div className="w-full mx-auto p-8 bg-white shadow-xl rounded-xl">
       <h1 className="text-3xl font-semibold text-center text-gray-800 mb-6">Update User Profile</h1>
 
       <div className="space-y-6">
