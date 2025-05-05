@@ -10,7 +10,6 @@ import { useState } from "react";
 
 import { protectedRoutes } from "@/contants";
 import { logout } from "@/services/AuthService";
-import CustomButton from "./CustomButton";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -73,7 +72,7 @@ const Navbar = () => {
             <Link
               key={item.href}
               href={item.href}
-              className="text-lg text-muted-foreground hover:text-[#4F46E5] transition"
+              className="text-base text-foreground hover:text-[#4F46E5] transition"
             >
               {item.label}
             </Link>
@@ -121,12 +120,15 @@ const Navbar = () => {
             </DropdownMenu>
           ) : (
             <Link href="/login">
-              <CustomButton textName="Login" className="py-1!" />
+              {/* <CustomButton textName="Login" className="py-1!" /> */}
+              <Button variant="outline">
+                Login
+              </Button>
             </Link>
           )}
           <Link href={"/cart"} className="relative">
-            <ShoppingBasket className="cursor-pointer hover:scale-105 border-2 border-gray-200 rounded-full" size={30}/>
-            <Badge variant="outline" className="absolute -top-2 -right-2">
+            <ShoppingBasket className="cursor-pointer hover:scale-105 border-2 border-gray-300 rounded-full" size={30}/>
+            <Badge variant="outline" className="absolute -top-2 -right-2 bg-blue-300">
               {cartItems.length}
             </Badge>
           </Link>
