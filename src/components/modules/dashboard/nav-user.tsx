@@ -26,7 +26,7 @@ import { resetCart } from "@/redux/features/cartSlice";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
-  const { user, setUser, setIsLoading } = useUser();
+  const { user, setUser } = useUser();
 
   // const router = useRouter();
   const pathname = usePathname();
@@ -34,16 +34,15 @@ export function NavUser() {
   //* redux
   const dispatch = useAppDispatch();
 
+  //! logout
   const handleLogout = async() => {
     await logout();
     setUser(null);
-    await setIsLoading(true);
     dispatch(resetCart());
 
-    if (protectedRoutes.some((route) => pathname.match(route))) {
+    // if (protectedRoutes.some((route) => pathname.match(route))) {
       window.location.href = "/";
-      await setIsLoading(false);
-    }
+    // }
   };
 
   return (

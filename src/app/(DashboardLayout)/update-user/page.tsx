@@ -87,7 +87,7 @@ const UpdateUserProfilePage = () => {
           alt={user?.name} 
           width={100} 
           height={100} 
-          className="rounded-full bg-cover absolute -bottom-10 border-2 border-[#4F46E5]"
+          className="rounded-full bg-cover w-32 h-32  absolute -bottom-10 border-2 border-[#4F46E5]"
         />
       </div>
 

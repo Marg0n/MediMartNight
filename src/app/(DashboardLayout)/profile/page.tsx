@@ -14,7 +14,7 @@ const UserProfilePage = () => {
   if (isLoading || !user) return <div className="p-8"><Loading/></div>;
 
   return (
-    <div className="max-w-4xl mx-auto p-8 bg-white shadow-lg rounded-xl">
+    <div className="w-full mx-auto p-8 bg-white shadow-lg rounded-xl">
       <h1 className="text-3xl text-[#4F46E5] font-semibold mb-6 justify-center flex items-center gap-2">
         {user?.name || "User"}&apos;s  Profile
       </h1>
@@ -31,7 +31,7 @@ const UserProfilePage = () => {
           alt={user?.name} 
           width={100} 
           height={100} 
-          className="rounded-full bg-cover absolute -bottom-10 border-2 border-[#4F46E5]"
+          className="rounded-full bg-cover w-32 h-32 absolute -bottom-10 border-2 border-[#4F46E5]"
         />
       </div>
 
