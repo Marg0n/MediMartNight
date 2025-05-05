@@ -72,7 +72,7 @@ const testimonials = [
 const TestimonialSection = () => {
   return (
     <section className="py-16 text-center">
-      <div className="container mx-auto px-4 md:px-0 max-w-3xl">
+      <div className="container mx-auto px-4 md:px-0 w-full">
         <h2 className="text-3xl font-bold text-[#4F46E5] mb-6">
           What People Say
         </h2>

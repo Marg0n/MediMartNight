@@ -1,5 +1,5 @@
 import Logo from "@/assets/images/logo/Logo";
-import { Facebook, Instagram, Twitter } from "lucide-react";
+import { Facebook, Instagram, Twitter, Mail, MapPinHouse, PhoneCall } from "lucide-react";
 import Link from "next/link";
 
 const Footer = () => {
@@ -50,13 +50,17 @@ const Footer = () => {
 
         {/* Legal & Social */}
         <div className="space-y-4">
-          <div className="space-x-4 text-sm">
-            <Link href="/privacy" className="hover:text-[#4F46E5] transition">
-              Privacy Policy
-            </Link>
-            <Link href="/terms" className="hover:text-[#4F46E5] transition">
-              Terms of Service
-            </Link>
+          <h4 className="text-[#4F46E5] font-semibold mb-3">Contact Us</h4>
+          <div className="flex flex-col gap-2 text-sm">
+            <div className="hover:text-[#4F46E5] transition flex gap-2">
+              <Mail /> medimart@gmail.com
+            </div>
+            <div className="hover:text-[#4F46E5] transition flex gap-2">
+              <PhoneCall /> +880-176547xxxx
+            </div>
+            <div className="hover:text-[#4F46E5] transition flex gap-2">
+              <MapPinHouse /> 105/24, Farmgate, Dhaka-1215
+            </div>
           </div>
 
           <div className="flex gap-4 text-[#4F46E5] mt-4">
