@@ -35,7 +35,7 @@ const AllProducts = () => {
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-6 xl:grid-cols-7 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-6 xl:grid-cols-7 gap-4 justify-items-center content-center">
         {/* Product List */}
         <div className="lg:col-span-4 xl:col-span-5">
           <InfiniteProductList filters={filters} />
