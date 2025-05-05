@@ -69,7 +69,7 @@ const ManageMedicine = () => {
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-10">
-      <h2 className="text-3xl font-bold mb-6 text-center text-indigo-700">
+      <h2 className="text-3xl font-bold mb-6 text-center text-[#4F46E5]">
         🧾 Manage All Medicines
       </h2>
       {/* Search & Filter */}
@@ -81,7 +81,7 @@ const ManageMedicine = () => {
         />
         <select className="w-full md:w-1/4 px-4 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
           <option>All</option>
-          <option>Comming Soon</option>
+          <option>Coming Soon</option>
         </select>
       </div>
       <div className="overflow-x-auto shadow-lg rounded-lg bg-white dark:bg-gray-900">

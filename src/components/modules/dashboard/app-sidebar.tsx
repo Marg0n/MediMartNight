@@ -20,6 +20,8 @@ import { NavUser } from "./nav-user";
 // import { NavUser } from "./nav-user";
 
 const data = {
+
+  //* admin nav items
   adminNavItem: [
     {
       title: "Dashboard",
@@ -29,7 +31,7 @@ const data = {
     },
     {
       title: "Manage",
-      url: "/admin",
+      url: "/admin/medicines",
       icon: Bot,
       items: [
         {
@@ -46,14 +48,14 @@ const data = {
         },
         {
           title: "Manage Orders",
-          url: "/admin/orders",
+          url: "/admin/manage-orders",
         },
       ],
     },
 
     {
       title: "Settings",
-      url: "/update-user",
+      url: "/profile",
       icon: Settings,
       items: [
         {
@@ -67,8 +69,8 @@ const data = {
       ],
     },
   ],
-  // customer nav items
-  //Akbar Shanto vai ekhane customer er jonne nav items add korben
+
+  //* customer nav items
   customerNavItem: [
     {
       title: "Dashboard",
@@ -131,8 +133,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     <Logo />
                   </div>
                   {/* <div className="grid flex-1 text-left text-sm leading-tight">
-                    <h2 className="font-bold text-xl">MediMart</h2>
-                  </div> */}
+                      <h2 className="font-bold text-xl">MediMart</h2>
+                    </div> */}
                 </Link>
               ) : (
                 <Link href="/customer">
@@ -140,8 +142,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     <Logo />
                   </div>
                   {/* <div className="grid flex-1 text-left text-sm leading-tight">
-   <h2 className="font-bold text-xl">MediMart</h2>
- </div> */}
+                      <h2 className="font-bold text-xl">MediMart</h2>
+                    </div> */}
                 </Link>
               )}
             </SidebarMenuButton>

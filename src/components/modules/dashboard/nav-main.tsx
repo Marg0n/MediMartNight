@@ -19,6 +19,7 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export function NavMain({
   items,
@@ -31,9 +32,13 @@ export function NavMain({
     items?: {
       title: string;
       url: string;
-    }[];
+    }[]; //? Nested items for submenus
   }[];
 }) {
+
+  const pathname = usePathname(); //? Get the router object to track the current URL
+
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Menu</SidebarGroupLabel>
@@ -41,7 +46,12 @@ export function NavMain({
         {items.map((item) => (
           <Collapsible key={item.title} asChild defaultOpen={true}>
             <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip={item.title}>
+              <SidebarMenuButton 
+                asChild 
+                tooltip={item.title}
+                //* Dynamically add the 'active' class if the link is the current one
+                className={!item.items && pathname === item.url ? "bg-[#4F46E5] text-white" : ""}
+              >
                 <Link href={item.url}>
                   <item.icon />
                   <span>{item.title}</span>
@@ -59,7 +69,11 @@ export function NavMain({
                     <SidebarMenuSub>
                       {item.items?.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.title}>
-                          <SidebarMenuSubButton asChild>
+                          <SidebarMenuSubButton 
+                            asChild
+                            //* Dynamically add the 'active' class if the link is the current one
+                            className={pathname === subItem.url ? "bg-[#4F46E5] text-white" : ""}
+                          >
                             <Link href={subItem.url}>
                               <span>{subItem.title}</span>
                             </Link>

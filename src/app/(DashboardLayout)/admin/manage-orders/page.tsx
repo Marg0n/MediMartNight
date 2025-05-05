@@ -34,9 +34,10 @@ import { IOrderDB, ShippingStatus } from "@/types/order";
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { Trash2 } from 'lucide-react';
 
 const ManageOrder = () => {
-  const [orders, setOrdders] = useState<IOrderDB[]>();
+  const [orders, setOrders] = useState<IOrderDB[]>();
   const [page, setPage] = useState(1);
   //   const [limit, setLimit] = useState(10);
   const [selectedStatus, setSelectedStatus] =
@@ -47,11 +48,11 @@ const ManageOrder = () => {
   const [openStatusDialog, setOpenStatusDialog] = useState(false);
   console.log(orders);
   const orderStatusOptions = [
-    { label: "PENDING", value: "pending" },
-    { label: "PROCESSING", value: "processing" },
-    { label: "SHIPPED", value: "shipped" },
-    { label: "DELIVERED", value: "delivered" },
-    { label: "CANCELED", value: "canceled" },
+    { label: "PENDING", value: "PENDING" },
+    { label: "PROCESSING", value: "PROCESSING" },
+    { label: "SHIPPED", value: "SHIPPED" },
+    { label: "DELIVERED", value: "DELIVERED" },
+    { label: "CANCELED", value: "CANCELED" },
   ];
   useEffect(() => {
     const fetchData = async () => {
@@ -59,7 +60,7 @@ const ManageOrder = () => {
         const data = await getAllOrders();
         const orders = data?.data?.data || [];
         // Filter orders for the specific user
-        setOrdders(orders);
+        setOrders(orders);
       } catch (error) {
         console.error("Failed to fetch Order");
       } finally {
@@ -95,7 +96,7 @@ const ManageOrder = () => {
         if (result?.success) {
           toast.success(result?.message);
           setOpenStatusDialog(false);
-          setOrdders((prevOrders) =>
+          setOrders((prevOrders) =>
             prevOrders?.map((order) =>
               order._id === orderId
                 ? { ...order, shippingStatus: status }
@@ -125,8 +126,8 @@ const ManageOrder = () => {
     );
   }
   return (
-    <div className="lg:w-2/3 p-6 border-2 shadow-md border-purple-600 shadow-purple-600 rounded-2xl overflow-x-auto">
-      <h2 className="text-center font-bold text-3xl mb-14">
+    <div className="lg:w-full p-6 border-2 shadow-md overflow-x-auto">
+      <h2 className="text-center font-bold text-3xl mb-14 text-[#4F46E5]">
         All of your Orders
       </h2>
 
@@ -182,7 +183,7 @@ const ManageOrder = () => {
               <TableCell className="text-right">
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
-                    <Button className="bg-purple-600">Delete</Button>
+                    <Button className="bg-red-400"><Trash2 /></Button>
                   </AlertDialogTrigger>
                   <AlertDialogContent>
                     <AlertDialogHeader>
