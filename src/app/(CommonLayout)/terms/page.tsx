@@ -29,7 +29,7 @@ const TermsPage = () => {
         </Section>
 
         <Section title="⚠️ 3. Disclaimer">
-          The materials on this website are provided on an "as is" basis. We make no warranties, expressed or implied, and hereby disclaim all other warranties including, without limitation, implied warranties of merchantability or fitness for a particular purpose.
+          The materials on this website are provided on an &apos;as is&apos; basis. We make no warranties, expressed or implied, and hereby disclaim all other warranties including, without limitation, implied warranties of merchantability or fitness for a particular purpose.
         </Section>
 
         <Section title="🚫 4. Limitations">
