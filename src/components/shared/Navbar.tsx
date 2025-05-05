@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { resetCart } from "@/redux/features/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import SearchBox from "@/components/shared/SearchBox";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -68,6 +69,10 @@ const Navbar = () => {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex justify-center items-center gap-6">
+          {/* SearchBox */}
+          <SearchBox />
+
+          {/* nav list */}
           {navItems.map((item) => (
             <Link
               key={item.href}
