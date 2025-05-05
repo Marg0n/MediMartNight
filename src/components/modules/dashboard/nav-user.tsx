@@ -37,11 +37,12 @@ export function NavUser() {
   const handleLogout = async() => {
     await logout();
     setUser(null);
-    setIsLoading(true);
+    await setIsLoading(true);
     dispatch(resetCart());
 
     if (protectedRoutes.some((route) => pathname.match(route))) {
       window.location.href = "/";
+      await setIsLoading(false);
     }
   };
 
@@ -57,7 +58,7 @@ export function NavUser() {
                 onClick={handleLogout}
               >
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage alt={user?.name} />
+                  <AvatarImage src={user?.image || 'https://github.com/shadcn.png'} alt={user?.name} />
                   <AvatarFallback className="rounded-lg">
                     {user?.role}
                   </AvatarFallback>

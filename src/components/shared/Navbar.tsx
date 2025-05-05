@@ -81,8 +81,8 @@ const Navbar = () => {
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <Avatar>
-                  <AvatarImage src="https://github.com/shadcn.png" />
-                  <AvatarFallback>User</AvatarFallback>
+                  <AvatarImage src={user?.image || 'https://github.com/shadcn.png'} alt={user?.name} />
+                  <AvatarFallback>{user?.name || 'User'}</AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
