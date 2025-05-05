@@ -27,7 +27,7 @@ const ProductCard = ({ medicine }: { medicine: TMedicine }) => {
   }
 
   return (
-    <div className="">
+    <>
       {/* Card Container */}
       <div className="border p-4 w-72 rounded-md shadow-gray-200 transition-all duration-500 ease-in-out hover:-translate-y-2 hover:shadow-lg flex flex-col">
         <Link href={`/shop/${medicine?._id}`}>
@@ -66,7 +66,7 @@ const ProductCard = ({ medicine }: { medicine: TMedicine }) => {
           </Button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
