@@ -18,6 +18,7 @@ import {
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Chart } from './charts/Chart';
+import Loading from "@/components/shared/Loading";
 
 
 //* define interface for the order
@@ -34,7 +35,12 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
 
   //* token
-  const token = localStorage.getItem("authToken");
+  const [token, setToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("authToken");
+    setToken(storedToken);
+  }, []);
 
   //* all users' data
   const [allUsers, setAllUsers] = useState<IUser[]>([]);
@@ -56,7 +62,7 @@ const AdminDashboard = () => {
     };
 
     fetchOrders();
-  }, []);
+  }, [token]);
 
   // console.log("data", orders);
   // console.log("users data", allUsers);
@@ -102,6 +108,10 @@ const AdminDashboard = () => {
     (a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime()
   );
   // console.log("chart data", chartData);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
