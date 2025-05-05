@@ -38,7 +38,6 @@ export function NavMain({
 
   const pathname = usePathname(); //? Get the router object to track the current URL
 
-
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Menu</SidebarGroupLabel>
