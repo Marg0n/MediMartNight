@@ -27,7 +27,7 @@ export default function DashboardLayout({
             <h4>{pathname}</h4>
           </div>
         </header>
-        <div className="p-4 pt-0 min-h-screen">{children}</div>
+        <div className="p-4 pt-0 min-h-[90vh]">{children}</div>
       </SidebarInset>
     </SidebarProvider>
   );

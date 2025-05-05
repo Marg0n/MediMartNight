@@ -80,7 +80,7 @@ const data = {
     },
     {
       title: "Manage",
-      url: "/customer",
+      url: "/customer/orders",
       icon: Bot,
       items: [
         // {
@@ -100,7 +100,7 @@ const data = {
     //ekhane change kora lagbe na eta common rekhechi
     {
       title: "Settings",
-      url: "/update-user",
+      url: "/profile",
       icon: Settings,
       items: [
         {

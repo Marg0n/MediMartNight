@@ -37,7 +37,7 @@ const ViewOrders = () => {
       }
 
       try {
-        // Directly access user._id, no need for await
+        //* Directly access user._id, no need for await
         const userId = user?._id;
 
         if (!userId) {
@@ -46,7 +46,7 @@ const ViewOrders = () => {
 
         const data = await getOrdersByUserId(userId as string);
 
-        console.log("data", data);
+        // console.log("data", data); 
 
         setOrders(data?.data || []);
       } catch (error) {
@@ -60,7 +60,7 @@ const ViewOrders = () => {
     if (user?._id) {
       fetchOrders();
     }
-  }, [user]); // <-- Added dependency on `user`
+  }, [user]); //? <-- Added dependency on `user`
 
   if (isLoading) return <Loading />;
   if (isError) return <p>Failed to load orders.</p>;
@@ -75,14 +75,14 @@ const ViewOrders = () => {
   }
 
   return (
-    <div className=" p-6 border-2 shadow-md rounded-2xl">
-      <h2 className="text-center font-bold text-3xl mb-14">
+    <div className="w-full min-h-full p-6 border-2 shadow-md rounded-2xl">
+      <h2 className="text-center font-bold text-3xl mb-14 text-[#4F46E5]">
         All of Your Orders
       </h2>
 
       <Table>
         <TableCaption className="mt-8">
-          A list of your recent Orders
+          {/* A list of your recent Orders */}
         </TableCaption>
         <TableHeader>
           <TableRow>
