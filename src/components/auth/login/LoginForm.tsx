@@ -24,6 +24,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { loginSchema } from "./loginValidation";
+import { Button } from "@/components/ui/button";
 
 export default function LoginForm() {
   // react hook form
@@ -143,12 +144,20 @@ export default function LoginForm() {
             />
           </div>
 
-          <CustomButton
+          {/* <CustomButton
             disabled={reCaptchaStatus ? false : true}
             type="submit"
             className="mt-5! w-full"
             textName={isSubmitting ? "Logging...." : "Login"}
-          />
+          /> */}
+          <Button 
+            variant="outline" 
+            className="mt-5! w-full bg-[#4F46E5] text-white hover:text-black" 
+            type="submit"
+            disabled={reCaptchaStatus ? false : true}
+          >
+            {isSubmitting ? "Logging...." : "Login"}
+          </Button>
         </form>
       </Form>
       <p className="text-sm text-gray-600 text-center my-3">

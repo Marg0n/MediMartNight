@@ -21,6 +21,7 @@ import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { registrationSchema } from "./registerValidation";
+import { Button } from "@/components/ui/button";
 
 export default function RegisterForm() {
   // react hook form
@@ -163,12 +164,20 @@ export default function RegisterForm() {
           />
 
           {/* submit button */}
-          <CustomButton
+          {/* <CustomButton
             disabled={Boolean(passwordConfirm && password !== passwordConfirm)}
             type="submit"
             className="mt-5! w-full"
             textName={isSubmitting ? "Registering...." : "Register"}
-          />
+          /> */}
+          <Button 
+            variant="outline" 
+            className="mt-5! w-full bg-[#4F46E5] text-white hover:text-black" 
+            type="submit"
+            disabled={Boolean(passwordConfirm && password !== passwordConfirm)}
+          >
+            {isSubmitting ? "Registering...." : "Register"}
+          </Button>
         </form>
       </Form>
       <p className="text-sm text-gray-600 text-center my-3">
