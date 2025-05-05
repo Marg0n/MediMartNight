@@ -3,7 +3,7 @@
 import AnimatedLogo from "@/assets/images/logo/AnimatedLogo";
 import { Button } from "@/components/ui/button";
 import { useUser } from "@/contexts/UserContext";
-import { LogOut, Menu, ShoppingCart, X } from "lucide-react";
+import { LogOut, Menu, ShoppingBasket, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -23,7 +23,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { resetCart } from "@/redux/features/cartSlice";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -44,6 +44,7 @@ const Navbar = () => {
 
   //* redux
   const dispatch = useAppDispatch();
+  const cartItems = useAppSelector((state) => state.cart.medicines);
 
   const handleLogOut = async () => {
     await logout();
@@ -123,8 +124,11 @@ const Navbar = () => {
               <CustomButton textName="Login" className="py-1!" />
             </Link>
           )}
-          <Link href={"/cart"}>
-            <ShoppingCart className="cursor-pointer hover:scale-105" />
+          <Link href={"/cart"} className="relative">
+            <ShoppingBasket className="cursor-pointer hover:scale-105 border-2 border-gray-200 rounded-full" size={30}/>
+            <Badge variant="outline" className="absolute -top-2 -right-2">
+              {cartItems.length}
+            </Badge>
           </Link>
         </nav>
 
@@ -137,8 +141,11 @@ const Navbar = () => {
           >
             {menuOpen ? <X size={24} /> : <Menu size={24} />}
           </Button>
-          <Link href={"/cart"}>
-            <ShoppingCart className="cursor-pointer hover:scale-105" />
+          <Link href={"/cart"} className="relative">
+            <ShoppingBasket className="cursor-pointer hover:scale-105 border-2 border-gray-200 rounded-full" size={30}/>
+            <Badge variant="outline" className="absolute -top-2 -right-2">
+              {cartItems.length}
+            </Badge>
           </Link>
         </div>
       </div>
