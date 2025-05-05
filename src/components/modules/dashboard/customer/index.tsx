@@ -8,6 +8,8 @@ import Link from "next/link";
 import { getOrdersByUserId } from "@/services/orders"; 
 import { IOrderDB } from "@/types/order";
 import { useUser } from "@/contexts/UserContext"; 
+import { PieChartComponent } from "./chart/PieChartComponent";
+import Loading from "@/components/shared/Loading";
 
 const UserDashboard = () => {
   const [orders, setOrders] = useState<IOrderDB[]>([]);
@@ -39,6 +41,8 @@ const UserDashboard = () => {
     delivered: orders.filter((order) => order.shippingStatus === "DELIVERED").length,
   };
 
+  if (loading) return <div><Loading/></div>;
+
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <h1 className="text-3xl font-bold text-gray-800 mb-8">Customer Dashboard</h1>
@@ -68,6 +72,10 @@ const UserDashboard = () => {
         <LinkCard title="Manage Orders" href="/customer/orders" />
         <LinkCard title="Browse Profile" href="/profile" />
         <LinkCard title="Profile Settings" href="/update-user" />
+      </div>
+
+      <div className="mt-10">        
+        <PieChartComponent stats={stats}/>
       </div>
     </div>
   );
