@@ -2,7 +2,6 @@
 "use client";
 
 // import PrescriptionUploader from "@/components/PrescriptionUploader/PrescriptionUploader";
-import CustomButton from "@/components/shared/CustomButton";
 import { CartProduct, orderedMedicinesSelector, orderSelector, resetCart } from "@/redux/features/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 // import { useState } from "react";
@@ -12,6 +11,7 @@ import { useUser } from "@/contexts/UserContext";
 import { createOrder } from "@/services/cart";
 import { useState } from "react";
 import PrescriptionUploader from "@/components/PrescriptionUploader/PrescriptionUploader";
+import { Button } from "@/components/ui/button";
 
 // Optional currency formatter
 const currencyFormatter = (value: number) =>
@@ -99,7 +99,7 @@ const PaymentDetails = () => {
 
       const token = localStorage.getItem('authToken')
  
-      console.log(orderData);
+      //! console.log(orderData);
 
       //* Perform order submission logic (e.g., sending data to an API)
       const res = await createOrder(orderData, token as string);
@@ -151,12 +151,21 @@ const PaymentDetails = () => {
         />
       )}
 
-      <CustomButton
+      {/* <CustomButton
         textName="Order Now"
         handleAnything={handleOrder}
-        className="w-full font-semibold py-1!"
+        className="w-full py-1!"
         // disabled={isOrderDisabled}
-      />
+      /> */}
+      <Button 
+        variant="outline"
+        onClick={handleOrder}
+        className="font-semibold w-full"
+        // disabled={isOrderDisabled}
+      >
+        Order Now
+      </Button>
+
     </div>
   );
 };
