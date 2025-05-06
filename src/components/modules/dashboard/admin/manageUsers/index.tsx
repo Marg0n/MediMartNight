@@ -9,17 +9,22 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const ManageUsers = () => {
-  const [orders, setOrdders] = useState<IOrderDB[]>([]);
+  const [orders, setOrders] = useState<IOrderDB[]>([]);
   const [users, setUsers] = useState<IUser[]>([]);
   const [userOrders, setUserOrders] = useState<
     Record<string, { running: number; delivered: number }>
   >({});
   const [isLoadingUsers, setIsLoadingUsers] = useState(true);
   const [isLoadingOrders, setIsLoadingOrders] = useState(true);
-  // const [page, setPage] = useState<number>(1);
-  // const [totalPages, setTotalPages] = useState<number>(1);
-  // const [isLoading, setIsLoading] = useState<boolean>(false);
-  // const limit = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  // Calculate pagination
+  const totalPages = Math.ceil(users.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentUsers = users.slice(startIndex, endIndex);
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoadingUsers(true);
@@ -49,7 +54,7 @@ const ManageUsers = () => {
         const data = await getAllOrders();
         const orders = data?.data?.data || [];
         // Filter orders for the specific user
-        setOrdders(orders);
+        setOrders(orders);
         // orders.filter((order: IOrderDB) => order?.user?._id === user._id)
       } catch (error) {
         console.error("Failed to fetch Users:", error);
@@ -60,7 +65,7 @@ const ManageUsers = () => {
     fetchData();
   }, []);
 
-  // Fetch orders for each user
+  //* Fetch orders for each user
   useEffect(() => {
     const fetchUserOrders = async () => {
       setIsLoadingOrders(true);
@@ -97,8 +102,18 @@ const ManageUsers = () => {
     }
   }, [users]);
 
-  console.log("users", users);
-  console.log("orders", orders);
+  //* pagination
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
   if (isLoadingUsers) {
     return <Loading />;
@@ -141,8 +156,8 @@ const ManageUsers = () => {
                     <Loading />
                   </td>
                 </tr>
-              ) : users.length > 0 ? (
-                users.map((user) => (
+              ) : currentUsers.length > 0 ? (
+                currentUsers.map((user) => (
                   <tr
                     key={user._id}
                     className="hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -185,12 +200,33 @@ const ManageUsers = () => {
               ) : (
                 <tr>
                   <td colSpan={7} className="py-10 text-center text-gray-500">
-                    No users found
+                    No Data Found!
                   </td>
                 </tr>
               )}
             </tbody>
           </table>
+
+          {/* Pagination Controls */}
+          <div className="flex justify-center items-center gap-4 py-4 border-t">
+            <button
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+              className="px-4 py-2 bg-indigo-100 text-indigo-800 font-semibold rounded hover:bg-indigo-200 disabled:opacity-50 transition"
+            >
+              ⬅ Previous
+            </button>
+            <span className="px-4 py-2 font-medium text-gray-700">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+              className="px-4 py-2 bg-indigo-100 text-indigo-800 font-semibold rounded hover:bg-indigo-200 disabled:opacity-50 transition"
+            >
+              Next ➡
+            </button>
+          </div>
         </div>
       </div>
     </div>
