@@ -73,6 +73,15 @@ const AdminDashboard = () => {
     pendingDeliveries: orders?.data.filter(
       (order) => order.shippingStatus === "PENDING",
     ).length,
+    processing: orders?.data.filter(
+      (order) => order.shippingStatus === "PROCESSING",
+    ).length,
+    shipped: orders?.data.filter(
+      (order) => order.shippingStatus === "SHIPPED",
+    ).length,
+    canceled: orders?.data.filter(
+      (order) => order.shippingStatus === "CANCELLED",
+    ).length,
     delivered: orders?.data.filter(
       (order) => order.shippingStatus === "DELIVERED",
     ).length,
@@ -93,7 +102,7 @@ const AdminDashboard = () => {
       .length,
   };
 
-  //* for the charts
+  //* for the charts : pain unpaid, refunded
   const ordersByDate = orders?.data.reduce((acc: Record<string, any>, order) => {
     const date = new Date(order?.createdAt as string).toISOString().split("T")[0]; // "YYYY-MM-DD"
     if (!acc[date]) {
@@ -129,6 +138,12 @@ const AdminDashboard = () => {
         <StatCard
           title="Pending Approvals"
           value={(stats.pendingDeliveries?.toString() as string) || "N/A"}
+          icon={<ChartBarIcon className="w-8 h-8 text-black" />}
+          color="from-yellow-500 to-orange-500"
+        />
+        <StatCard
+          title="Processing"
+          value={(stats.processing?.toString() as string) || "N/A"}
           icon={<ChartBarIcon className="w-8 h-8 text-black" />}
           color="from-yellow-500 to-orange-500"
         />
