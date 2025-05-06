@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
@@ -39,14 +40,15 @@ import { Trash2 } from 'lucide-react';
 const ManageOrder = () => {
   const [orders, setOrders] = useState<IOrderDB[]>();
   const [page, setPage] = useState(1);
-  //   const [limit, setLimit] = useState(10);
+  const limit = 7; //? Set limit to x items per page
   const [selectedStatus, setSelectedStatus] =
     useState<ShippingStatus>("PENDING");
   const [selectedOrderId, setSelectedOrderId] = useState<
     ShippingStatus | string
   >("");
   const [openStatusDialog, setOpenStatusDialog] = useState(false);
-  console.log(orders);
+
+  //* Available order status options
   const orderStatusOptions = [
     { label: "PENDING", value: "PENDING" },
     { label: "PROCESSING", value: "PROCESSING" },
@@ -54,45 +56,38 @@ const ManageOrder = () => {
     { label: "DELIVERED", value: "DELIVERED" },
     { label: "CANCELED", value: "CANCELED" },
   ];
+
+  //* Fetch orders on component mount and when page changes
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getAllOrders();
         const orders = data?.data?.data || [];
-        // Filter orders for the specific user
         setOrders(orders);
       } catch (error) {
         console.error("Failed to fetch Order");
-      } finally {
-        // setIsLoading(false);
       }
     };
     fetchData();
   }, []);
+
+  //* Handle order deletion
   const handleDeleteOrder = async (orderId: string) => {
-    console.log(orderId);
     try {
       const result = await deleteOrder(orderId);
-      // console.log("result",result)
       if (result?.data?.success) {
         toast.success(result?.data?.message);
       }
-      //   console.log(result.data);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       toast.error("Failed to delete order", err);
     }
   };
 
+  // Handle order status update
   const handleUpdateOrder = async (orderId: string, status: ShippingStatus) => {
-    console.log({ orderId, status });
     if (orderId && status) {
-      // Check if both orderId and status are provided
       try {
-        // Update the payload structure to match what your `updateOrder` expects
         const result = await updateOrder(orderId, { status });
-        console.log(result);
-        // Check if the response contains success data
         if (result?.success) {
           toast.success(result?.message);
           setOpenStatusDialog(false);
@@ -104,9 +99,7 @@ const ManageOrder = () => {
             )
           );
         }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
-        // Log the error and show toast message on failure
         console.error(err);
         toast.error("Failed to update order");
       }
@@ -125,6 +118,12 @@ const ManageOrder = () => {
       </div>
     );
   }
+
+  // Calculate pagination
+  const startIndex = (page - 1) * limit;
+  const endIndex = startIndex + limit;
+  const paginatedOrders = orders.slice(startIndex, endIndex);
+
   return (
     <div className="lg:w-full p-6 border-2 shadow-md overflow-x-auto">
       <h2 className="text-center font-bold text-3xl mb-14 text-[#4F46E5]">
@@ -146,7 +145,7 @@ const ManageOrder = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {orders?.map((order) => (
+          {paginatedOrders?.map((order) => (
             <TableRow key={order._id}>
               <TableCell className="font-medium">{order.user.name}</TableCell>
               <TableCell className="font-medium">
@@ -226,7 +225,7 @@ const ManageOrder = () => {
 
         <Button
           variant="outline"
-          disabled={orders?.length < 12} // Disable if less than 5, assuming no more pages
+          disabled={endIndex >= (orders?.length || 0)} // Disable if on last page
           onClick={() => setPage((prev) => prev + 1)}
         >
           Next
