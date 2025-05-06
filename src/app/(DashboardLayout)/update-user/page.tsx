@@ -19,6 +19,9 @@ const UpdateUserProfilePage = () => {
     name: '',
     email: '',
     image: '',
+    address: '',
+    bloodGroup: '',
+    phone: '',
   });
   const [editing, setEditing] = useState(false);
 
@@ -28,6 +31,9 @@ const UpdateUserProfilePage = () => {
         name: user.name || '',
         email: user.email || '',
         image: user.image || '',
+        address: user.address || '',
+        bloodGroup: user.bloodGroup || '',
+        phone: user.phone || '',
       });
     }
   }, [user]);
@@ -55,7 +61,10 @@ const UpdateUserProfilePage = () => {
       await updateUserCookie({
         ...user,             // keep existing user fields
         name: formData.name,  // update if only the changed name 
-        image: formData.image // update if only the changed image
+        image: formData.image, // update if only the changed image
+        address: formData.address,
+        bloodGroup: formData.bloodGroup,
+        phone: formData.phone,
       });
 
       //* Re-sync context from updated cookie/server
@@ -107,6 +116,27 @@ const UpdateUserProfilePage = () => {
           handleChange={handleChange}
         />
         <ProfileField 
+          label="Address" 
+          value={formData.address} 
+          name="address"
+          editing={editing} 
+          handleChange={handleChange}
+        />
+        <ProfileField 
+          label="Blood Group" 
+          value={formData.bloodGroup} 
+          name="bloodGroup"
+          editing={editing} 
+          handleChange={handleChange}
+        />
+        <ProfileField 
+          label="Phone" 
+          value={formData.phone} 
+          name="phone"
+          editing={editing} 
+          handleChange={handleChange}
+        />
+        <ProfileField 
           label="Email" 
           value={formData.email} 
           name="email"
@@ -140,7 +170,7 @@ const UpdateUserProfilePage = () => {
             </button>
             <button
               onClick={() => {
-                setFormData({ name: user.name, email: user.email, image: user.image || '' });
+                setFormData({ name: user.name, email: user.email, image: user.image || '', address: user.address || '', bloodGroup: user.bloodGroup || '', phone: user.phone || '' });
                 setEditing(false);
               }}
               className="bg-gray-300 text-gray-800 px-6 py-3 rounded-lg transition duration-300 transform hover:bg-gray-400 hover:scale-105"
