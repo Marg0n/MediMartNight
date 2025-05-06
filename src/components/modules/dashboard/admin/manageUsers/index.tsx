@@ -1,12 +1,26 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import Loading from "@/components/shared/Loading";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 import { getAllOrders, getOrdersByUserId } from "@/services/orders";
-import { getAllUsers } from "@/services/users";
+import { deleteUser, getAllUsers } from "@/services/users";
 import { IUser } from "@/types";
 import { IOrderDB } from "@/types/order";
 import { TrashIcon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const ManageUsers = () => {
   const [orders, setOrders] = useState<IOrderDB[]>([]);
@@ -18,6 +32,7 @@ const ManageUsers = () => {
   const [isLoadingOrders, setIsLoadingOrders] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+  const [isDeleting, setIsDeleting] = useState(false);
 
   // Calculate pagination
   const totalPages = Math.ceil(users.length / itemsPerPage);
@@ -102,7 +117,7 @@ const ManageUsers = () => {
     }
   }, [users]);
 
-  //* pagination
+  //* Handle page navigation
   const handlePrevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
@@ -112,6 +127,32 @@ const ManageUsers = () => {
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handleDeleteUser = async (userId: string) => {
+    if (!userId) return;
+
+    setIsDeleting(true);
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      toast.error("No auth token found.");
+      return;
+    }
+
+    try {
+      const res = await deleteUser(userId);
+      if (res?.success) {
+        toast.success("User deleted successfully");
+        setUsers((prev) => prev.filter((user) => user._id !== userId));
+      } else {
+        toast.error("Failed to delete user");
+      }
+    } catch (error) {
+      console.error("Delete error:", error);
+      toast.error("Something went wrong while deleting");
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -190,10 +231,41 @@ const ManageUsers = () => {
                         </button>
                       </Link>
                     </td>
-                    <td className=" text-center">
-                      <button className="inline-flex items-center justify-center p-2 text-red-600 hover:text-white hover:bg-red-600 rounded-full transition">
-                        <TrashIcon className="h-5 w-5" />
-                      </button>
+                    <td className="text-center">
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className="hover:bg-red-500 hover:text-white"
+                            disabled={isDeleting}
+                          >
+                            <TrashIcon className="h-5 w-5" />
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>
+                              Are you absolutely sure?
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                              This action cannot be undone. This will
+                              permanently delete this user and all their data
+                              from our servers.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                              className="bg-red-600 hover:bg-red-700"
+                              onClick={() =>
+                                user._id && handleDeleteUser(user._id)
+                              }
+                            >
+                              {isDeleting ? "Deleting..." : "Confirm Delete"}
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </td>
                   </tr>
                 ))
@@ -209,23 +281,30 @@ const ManageUsers = () => {
 
           {/* Pagination Controls */}
           <div className="flex justify-center items-center gap-4 py-4 border-t">
-            <button
-              onClick={handlePrevPage}
+            {/* Previous Page Button */}
+            <Button
+              variant="outline"
               disabled={currentPage === 1}
-              className="px-4 py-2 bg-indigo-100 text-indigo-800 font-semibold rounded hover:bg-indigo-200 disabled:opacity-50 transition"
+              onClick={handlePrevPage}
+              className="hover:bg-indigo-100"
             >
               ⬅ Previous
-            </button>
+            </Button>
+
+            {/* Current Page Indicator */}
             <span className="px-4 py-2 font-medium text-gray-700">
-              Page {currentPage} of {totalPages}
+              Page {currentPage} of {totalPages || 1}
             </span>
-            <button
+
+            {/* Next Page Button */}
+            <Button
+              variant="outline"
+              disabled={currentPage >= totalPages}
               onClick={handleNextPage}
-              disabled={currentPage === totalPages}
-              className="px-4 py-2 bg-indigo-100 text-indigo-800 font-semibold rounded hover:bg-indigo-200 disabled:opacity-50 transition"
+              className="hover:bg-indigo-100"
             >
               Next ➡
-            </button>
+            </Button>
           </div>
         </div>
       </div>
