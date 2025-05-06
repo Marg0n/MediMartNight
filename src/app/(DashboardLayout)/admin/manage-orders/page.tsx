@@ -125,46 +125,60 @@ const ManageOrder = () => {
   const paginatedOrders = orders.slice(startIndex, endIndex);
 
   return (
-    <div className="lg:w-full p-6 border-2 shadow-md overflow-x-auto">
-      <h2 className="text-center font-bold text-3xl mb-14 text-[#4F46E5]">
-        All of your Orders
+    <div className="lg:w-full p-8 border rounded-xl shadow-lg bg-white">
+      <h2 className="text-center font-bold text-3xl mb-10 text-[#4F46E5] tracking-tight">
+        Order Management Dashboard
       </h2>
 
-      <Table>
-        <TableCaption className="mt-8">
-          A list of your recent Orders
+      <Table className="border rounded-lg overflow-hidden">
+        <TableCaption className="mt-6 text-slate-600 font-medium">
+          Comprehensive list of all customer orders
         </TableCaption>
-        <TableHeader className="text-l">
+        <TableHeader className="bg-[#4F46E5]">
           <TableRow>
-            <TableHead>Customer Name</TableHead>
-            <TableHead>Product Name</TableHead>
-            <TableHead>Payment</TableHead>
-            <TableHead>Update Shipping Status</TableHead>
-            <TableHead>Amount</TableHead>
-            <TableHead className="text-right">Delete</TableHead>
+            <TableHead className="font-semibold text-white py-4">Customer Name</TableHead>
+            <TableHead className="font-semibold text-white">Product Name</TableHead>
+            <TableHead className="font-semibold text-white">Payment</TableHead>
+            <TableHead className="font-semibold text-white">Shipping Status</TableHead>
+            <TableHead className="font-semibold text-white">Amount</TableHead>
+            <TableHead className="text-right font-semibold text-white">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {paginatedOrders?.map((order) => (
-            <TableRow key={order._id}>
-              <TableCell className="font-medium">{order.user.name}</TableCell>
-              <TableCell className="font-medium">
+            <TableRow key={order._id} className="hover:bg-gray-50/50 transition-all duration-200">
+              <TableCell className="font-medium text-gray-900">{order.user.name}</TableCell>
+              <TableCell className="font-medium text-gray-700">
                 {order?.products[0]?.product?.name}
               </TableCell>
-              <TableCell>{order?.paymentStatus}</TableCell>
-              <TableCell className="">
+              <TableCell>
+                <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                  order?.paymentStatus === 'PAID' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
+                }`}>
+                  {order?.paymentStatus}
+                </span>
+              </TableCell>
+              <TableCell>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button className="cursor-pointer" variant="outline">
-                      {order?.shippingStatus}
+                    <Button className="cursor-pointer w-32 font-medium" variant="outline">
+                      <span className={`${
+                        order?.shippingStatus === 'DELIVERED' ? 'text-green-600' :
+                        order?.shippingStatus === 'CANCELED' ? 'text-red-600' :
+                        order?.shippingStatus === 'PROCESSING' ? 'text-blue-600' :
+                        order?.shippingStatus === 'SHIPPED' ? 'text-purple-600' :
+                        'text-yellow-600'
+                      }`}>
+                        {order?.shippingStatus}
+                      </span>
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="p-2">
+                  <DropdownMenuContent className="p-2 w-32">
                     <DropdownMenuGroup>
                       {orderStatusOptions?.map((option) => (
                         <DropdownMenuItem
                           key={option?.label}
-                          className="cursor-pointer"
+                          className="cursor-pointer py-2 hover:bg-gray-100 rounded-md transition-colors"
                           onClick={() => {
                             setSelectedStatus(option?.value as ShippingStatus);
                             setOpenStatusDialog(true);
@@ -178,29 +192,33 @@ const ManageOrder = () => {
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TableCell>
-              <TableCell>{order?.totalPrice}</TableCell>
+              <TableCell className="font-medium">
+                ${order?.totalPrice.toFixed(2)}
+              </TableCell>
               <TableCell className="text-right">
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
-                    <Button variant='outline' className="hover:bg-red-500 hover:text-white"><Trash2 /></Button>
+                    <Button variant='outline' className="hover:bg-red-500 hover:text-white transition-colors">
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
                   </AlertDialogTrigger>
-                  <AlertDialogContent>
+                  <AlertDialogContent className="rounded-lg">
                     <AlertDialogHeader>
-                      <AlertDialogTitle>
-                        Are you absolutely sure?
+                      <AlertDialogTitle className="text-xl">
+                        Confirm Deletion
                       </AlertDialogTitle>
-                      <AlertDialogDescription>
+                      <AlertDialogDescription className="text-gray-600">
                         This action cannot be undone. This will permanently
-                        delete this Order data from our servers.
+                        delete this order data from our servers.
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogCancel className="rounded-md">Cancel</AlertDialogCancel>
                       <AlertDialogAction
-                        className="bg-purple-600 hover:bg-purple-700"
+                        className="bg-red-600 hover:bg-red-700 rounded-md transition-colors"
                         onClick={() => handleDeleteOrder(order._id)}
                       >
-                        Confirm Delete
+                        Delete Order
                       </AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>
@@ -210,32 +228,34 @@ const ManageOrder = () => {
           ))}
         </TableBody>
       </Table>
-      <div className="flex justify-center mt-6 gap-4">
+      <div className="flex justify-center mt-8 gap-4 items-center">
         <Button
           variant="outline"
           disabled={page === 1}
           onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+          className="px-4 py-2 rounded-md hover:bg-gray-100 transition-colors"
         >
-          Previous
+          ⬅️ Previous
         </Button>
 
-        <span className="flex items-center font-medium text-lg">
+        <span className="flex items-center font-medium text-lg text-gray-700">
           Page {page}
         </span>
 
         <Button
           variant="outline"
-          disabled={endIndex >= (orders?.length || 0)} // Disable if on last page
+          disabled={endIndex >= (orders?.length || 0)}
           onClick={() => setPage((prev) => prev + 1)}
+          className="px-4 py-2 rounded-md hover:bg-gray-100 transition-colors"
         >
-          Next
+          Next ➡️
         </Button>
       </div>
       <AlertDialog open={openStatusDialog} onOpenChange={setOpenStatusDialog}>
-        <AlertDialogContent>
+        <AlertDialogContent className="rounded-lg">
           <AlertDialogHeader>
-            <AlertDialogTitle>Confirm Status Update</AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogTitle className="text-xl">Update Order Status</AlertDialogTitle>
+            <AlertDialogDescription className="text-gray-600">
               Are you sure you want to change the status to{" "}
               <span className="font-semibold text-purple-600">
                 {selectedStatus}
@@ -244,12 +264,12 @@ const ManageOrder = () => {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="rounded-md">Cancel</AlertDialogCancel>
             <AlertDialogAction
-              className="bg-purple-600 hover:bg-purple-700"
+              className="bg-purple-600 hover:bg-purple-700 rounded-md transition-colors"
               onClick={() => handleUpdateOrder(selectedOrderId, selectedStatus)}
             >
-              Confirm
+              Update Status
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
