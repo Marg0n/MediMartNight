@@ -83,18 +83,18 @@ const ManageOrder = () => {
     }
   };
 
-  // Handle order status update
-  const handleUpdateOrder = async (orderId: string, status: ShippingStatus) => {
-    if (orderId && status) {
+  //* Handle order status update
+  const handleUpdateOrder = async (orderId: string, shippingStatus: ShippingStatus) => {
+    if (orderId && shippingStatus) {
       try {
-        const result = await updateOrder(orderId, { status });
+        const result = await updateOrder(orderId, { shippingStatus });
         if (result?.success) {
           toast.success(result?.message);
           setOpenStatusDialog(false);
           setOrders((prevOrders) =>
             prevOrders?.map((order) =>
               order._id === orderId
-                ? { ...order, shippingStatus: status }
+                ? { ...order, shippingStatus: shippingStatus }
                 : order
             )
           );
@@ -119,7 +119,7 @@ const ManageOrder = () => {
     );
   }
 
-  // Calculate pagination
+  //* Calculate pagination
   const startIndex = (page - 1) * limit;
   const endIndex = startIndex + limit;
   const paginatedOrders = orders.slice(startIndex, endIndex);
