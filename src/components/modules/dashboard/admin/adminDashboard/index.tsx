@@ -194,10 +194,8 @@ const AdminDashboard = () => {
       <div className="mt-10">
         <Chart chartData={chartData} />
       </div>
-      <div className="mt-10">
+      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
         <BarChartComponent orders={orders?.data || []}/>
-      </div>
-      <div className="mt-10">
         <PendingVsTotalPieChart orders={orders?.data || []}/>
       </div>
     </div>

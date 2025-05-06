@@ -2,14 +2,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { ShoppingCartIcon, TruckIcon, PackageIcon } from "lucide-react";
-import Link from "next/link";
+import Loading from "@/components/shared/Loading";
+import { useUser } from "@/contexts/UserContext";
 import { getOrdersByUserId } from "@/services/orders";
 import { IOrderDB } from "@/types/order";
-import { useUser } from "@/contexts/UserContext";
+import { PackageIcon, ShoppingCartIcon, TruckIcon } from "lucide-react";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
 import { PieChartComponent } from "./chart/PieChartComponent";
-import Loading from "@/components/shared/Loading";
 
 const UserDashboard = () => {
   const [orders, setOrders] = useState<IOrderDB[]>([]);
@@ -39,41 +39,78 @@ const UserDashboard = () => {
   const ordersByMonth = orders.reduce((acc: Record<string, any>, order) => {
     //? Format the month as "YYYY-MM"
     const date = new Date(order?.createdAt as string);
-    const month = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+    const month = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+      2,
+      "0",
+    )}`;
 
     if (!acc[month]) {
-      acc[month] = { month, placed: 0, pending: 0, delivered: 0 };
+      acc[month] = {
+        month,
+        PENDING: 0,
+        PROCESSING: 0,
+        SHIPPED: 0,
+        DELIVERED: 0,
+        CANCELLED: 0,
+      };
     }
 
     //* Increment based on order status
-    if (order.shippingStatus === "PENDING") {
-      acc[month].pending++;
-    } else if (order.shippingStatus === "DELIVERED") {
-      acc[month].delivered++;
+    switch (order.shippingStatus) {
+      case "PENDING":
+        acc[month].PENDING++;
+        break;
+      case "PROCESSING":
+        acc[month].PROCESSING++;
+        break;
+      case "SHIPPED":
+        acc[month].SHIPPED++;
+        break;
+      case "DELIVERED":
+        acc[month].DELIVERED++;
+        break;
+      case "CANCELLED":
+        acc[month].CANCELLED++;
+        break;
     }
-    
-    acc[month].placed++; //? Increment orders placed regardless of the status
 
     return acc;
   }, {});
 
   //* Convert ordersByMonth object to an array
   const chartDataByMonth = Object.values(ordersByMonth).sort(
-    (a: any, b: any) => new Date(a.month).getTime() - new Date(b.month).getTime()
+    (a: any, b: any) =>
+      new Date(a.month).getTime() - new Date(b.month).getTime(),
   );
 
   //* Stats for general dashboard
   const stats = {
     ordersPlaced: orders.length,
-    pendingDeliveries: orders.filter((order) => order.shippingStatus === "PENDING").length,
-    delivered: orders.filter((order) => order.shippingStatus === "DELIVERED").length,
+    pendingDeliveries: orders.filter(
+      (order) => order.shippingStatus === "PENDING",
+    ).length,
+    processing: orders.filter((order) => order.shippingStatus === "PROCESSING")
+      .length,
+    shipped: orders.filter((order) => order.shippingStatus === "SHIPPED")
+      .length,
+    delivered: orders.filter((order) => order.shippingStatus === "DELIVERED")
+      .length,
+    cancelled: orders.filter((order) => order.shippingStatus === "CANCELLED")
+      .length,
   };
 
-  if (loading) return <div><Loading /></div>;
+  if (loading)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
-      <h1 className="text-3xl font-bold text-gray-800 mb-8">Customer Dashboard</h1>
+      <h1 className="text-3xl font-bold text-gray-800 mb-8">
+        Customer Dashboard
+      </h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
         <StatCard
@@ -103,7 +140,7 @@ const UserDashboard = () => {
       </div>
 
       <div className="mt-10">
-        <PieChartComponent stats={stats} />
+        <PieChartComponent orders={orders} />
       </div>
     </div>
   );

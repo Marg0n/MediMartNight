@@ -192,7 +192,7 @@ export function PendingVsTotalPieChart({
       <ChartStyle id={id} config={chartConfig} />
       <CardHeader className="flex-row items-start space-y-0 pb-0">
         <div className="grid gap-1">
-          <CardTitle>Pending vs Total Orders</CardTitle>
+          <CardTitle>All Status vs Total Orders</CardTitle>
           <CardDescription>Monthly breakdown</CardDescription>
         </div>
         <Select value={activeMonth} onValueChange={setActiveMonth}>
