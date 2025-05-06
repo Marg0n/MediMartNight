@@ -7,11 +7,11 @@ import { useEffect, useState } from 'react';
 import { updateUser } from '@/services/users'; 
 import { useUser } from '@/contexts/UserContext';
 import { toast } from 'sonner';
-import CustomButton from '@/components/shared/CustomButton';
 import { updateUserCookie } from '@/app/actions/updateUserCookie';
 import Loading from '@/components/shared/Loading';
 import { getCurrentUser } from '@/services/AuthService';
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
 const UpdateUserProfilePage = () => {
   const { user, isLoading, setUser } = useUser();
@@ -117,11 +117,18 @@ const UpdateUserProfilePage = () => {
 
         {!editing ? (
           <div className="flex justify-center">
-            <CustomButton
+            {/* <CustomButton
               textName='Edit Profile'
               handleAnything={() => setEditing(true)}
 
-            />
+            /> */}
+            <Button 
+              variant='outline' 
+              className="w-full bg-indigo-500 text-white hover:text-black h-12"
+              onClick={() => setEditing(true)}
+            >
+              Edit Profile
+            </Button>
           </div>
         ) : (
           <div className="flex justify-center gap-4">

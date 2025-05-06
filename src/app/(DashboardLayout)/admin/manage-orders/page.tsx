@@ -183,7 +183,7 @@ const ManageOrder = () => {
               <TableCell className="text-right">
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
-                    <Button className="bg-red-400"><Trash2 /></Button>
+                    <Button variant='outline' className="hover:bg-red-500 hover:text-white"><Trash2 /></Button>
                   </AlertDialogTrigger>
                   <AlertDialogContent>
                     <AlertDialogHeader>

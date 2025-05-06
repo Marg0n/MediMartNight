@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
-import CustomButton from "@/components/shared/CustomButton";
+import { Button } from "@/components/ui/button";
 import { createProduct } from "@/services/Product";
 import { TMedicine } from "@/types";
 import { useState } from "react";
@@ -365,11 +365,18 @@ const AddMedicine = () => {
         </div>
 
         <div className="col-span-2">
-          <CustomButton
+          {/* <CustomButton
             textName="Add Medicine"
             type='submit'
             className="w-full"
-          />
+          /> */}
+          <Button
+            variant="outline"
+            onClick={handleSubmit}
+            className="w-full bg-indigo-500 text-white hover:text-black h-10"
+          >
+            Add Medicine
+          </Button>
         </div>
       </form>
     </div>
