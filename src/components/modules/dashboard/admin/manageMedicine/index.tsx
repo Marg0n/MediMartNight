@@ -25,7 +25,7 @@ const ManageMedicine = () => {
       try {
         const data = await getAllProducts("1", "1000", {});
         const medicines = data?.data?.result || [];
-        const categories = new Set(
+        const categories = new Set<string>(
           medicines
             .map((med: TMedicine) => med.dosCategory as string)
             .filter(Boolean),
