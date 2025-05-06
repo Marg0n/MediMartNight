@@ -31,10 +31,10 @@ const FeaturedSection = () => {
   return (
     <section className="py-12 container mx-auto px-4 md:px-0">
       <div className="mb-8 text-center">
-        <h2 className="text-2xl md:text-3xl font-bold text-[#4F46E5] mb-2">
+        <h2 className="text-4xl font-extrabold text-center mb-2 bg-gradient-to-r from-[#4F46E5] to-rose-500 bg-clip-text text-transparent tracking-wide">
           Featured Products
         </h2>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-[#4F46E5]">
           Discover our top-selling in-stock items.
         </p>
       </div>

@@ -74,7 +74,7 @@ const FilterSearch = ({
   };
 
   return (
-    <div className=" p-6 space-y-6 border rounded-lg shadow-lg bg-white  shadow-blue-200 transition-all duration-500 ease-in-out  hover:shadow-lg  border-gray-200">
+    <div className="space-y-6  rounded-lg  bg-white  shadow-gray-200 transition-all duration-500 ease-in-out    border-gray-200">
       <Input
         className="input input-bordered w-full"
         type="text"
@@ -90,7 +90,7 @@ const FilterSearch = ({
         </label>
         <div className="min-h-40 space-y-1">
           {categories.map((category) => (
-            <label key={category} className="flex items-center space-x-2">
+            <label key={category} className="flex items-center space-x-2 text-sm">
               <input
                 type="checkbox"
                 checked={selectedCategories.includes(category)}
