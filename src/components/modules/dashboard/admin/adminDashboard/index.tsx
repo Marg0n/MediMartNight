@@ -134,6 +134,7 @@ const AdminDashboard = () => {
           value={(stats.ordersPlaced?.toString() as string) || "N/A"}
           icon={<ClipboardListIcon className="w-8 h-8 text-black" />}
           color="from-indigo-500 to-purple-500"
+          // color="bg-opacity-20 backdrop-blur-sm from-indigo-500/60 to-purple-500/60"
         />
         <StatCard
           title="Pending Approvals"
@@ -151,13 +152,13 @@ const AdminDashboard = () => {
           title="Out of Stock"
           value={(stats.outOfStock?.toString() as string) || "N/A"}
           icon={<ShoppingBagIcon className="w-8 h-8 text-black" />}
-          color="from-red-500 to-pink-500"
+          color="from-red-500 to-amber-500"
         />
         <StatCard
           title="Total Users"
           value={(allUsers?.length?.toString() as string) || "N/A"}
           icon={<User className="w-8 h-8 text-black" />}
-          color="from-green-500 to-emerald-600"
+          color="from-emerald-600 to-green-500"
         />
         <StatCard
           title="Revenue"
@@ -175,7 +176,7 @@ const AdminDashboard = () => {
           title="Pending Payment"
           value={(stats?.paymentPending?.toString() as string) || "N/A"}
           icon={<LayoutList className="w-8 h-8 text-black" />}
-          color="from-green-500 to-red-500"
+          color="from-amber-500 to-red-500"
         />
         <StatCard
           title="Refunded"
@@ -218,7 +219,7 @@ const StatCard = ({
   >
     <div>
       <p className="text-sm">{title}</p>
-      <h2 className="text-3xl font-bold">{value}</h2>
+      <h2 className="text-3xl font-bold text-white drop-shadow-lg">{value}</h2>
     </div>
     <div className="bg-white bg-opacity-20 p-3 rounded-full">{icon}</div>
   </div>

@@ -123,13 +123,13 @@ const UserDashboard = () => {
           title="Pending Deliveries"
           value={loading ? "..." : stats.pendingDeliveries.toString()}
           icon={<TruckIcon className="w-8 h-8 text-black" />}
-          color="from-yellow-500 to-orange-500"
+          color="from-orange-500 to-yellow-500"
         />
         <StatCard
           title="Delivered"
           value={loading ? "..." : stats.delivered.toString()}
           icon={<PackageIcon className="w-8 h-8 text-black" />}
-          color="from-green-400 to-emerald-500"
+          color="from-emerald-600 to-green-500"
         />
       </div>
 
@@ -163,7 +163,7 @@ const StatCard = ({
   >
     <div>
       <p className="text-sm">{title}</p>
-      <h2 className="text-3xl font-bold">{value}</h2>
+      <h2 className="text-3xl font-bold text-white  drop-shadow-lg">{value}</h2>
     </div>
     <div className="bg-white bg-opacity-20 p-3 rounded-full">{icon}</div>
   </div>
