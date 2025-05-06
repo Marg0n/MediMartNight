@@ -4,6 +4,7 @@
 import { Button } from "@/components/ui/button";
 import { createProduct } from "@/services/Product";
 import { TMedicine } from "@/types";
+import { ClipboardPlus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -81,8 +82,8 @@ const AddMedicine = () => {
 
   return (
     <div className="w-full mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-semibold text-center mb-4 text-[#4F46E5]">
-        Add New Medicine
+      <h2 className="text-center font-bold text-3xl mb-10 text-[#4F46E5] tracking-tight flex  justify-center items-center gap-2">
+        <ClipboardPlus size={30}/> Add New Medicine
       </h2>
 
       {error && (

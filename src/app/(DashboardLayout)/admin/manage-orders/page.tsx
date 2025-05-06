@@ -35,7 +35,7 @@ import { IOrderDB, ShippingStatus } from "@/types/order";
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Trash2 } from 'lucide-react';
+import { BookA, BookAIcon, Trash2 } from 'lucide-react';
 
 const ManageOrder = () => {
   const [orders, setOrders] = useState<IOrderDB[]>();
@@ -126,8 +126,8 @@ const ManageOrder = () => {
 
   return (
     <div className="lg:w-full p-8 border rounded-xl shadow-lg bg-white">
-      <h2 className="text-center font-bold text-3xl mb-10 text-[#4F46E5] tracking-tight">
-        Order Management Dashboard
+      <h2 className="flex justify-center items-center gap-2 font-bold text-3xl mb-10 text-[#4F46E5] tracking-tight">
+        <BookAIcon size={30} /> Order Management Dashboard
       </h2>
 
       <Table className="border rounded-lg overflow-hidden">
