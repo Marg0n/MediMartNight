@@ -1,16 +1,128 @@
-// app/admin/page.tsx
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { getAllOrders } from "@/services/orders";
+import { getAllUsers } from "@/services/users";
+import { IUser } from "@/types";
+import { IOrderDB } from "@/types/order";
 import {
   ChartBarIcon,
   ClipboardListIcon,
   DollarSignIcon,
   ShoppingBagIcon,
   User,
+  LayoutList,
+  RotateCcw,
 } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { Chart } from './charts/Chart';
+import Loading from "@/components/shared/Loading";
+import { BarChartComponent } from "./charts/BarChart";
+import { PendingVsTotalPieChart } from "./charts/PieChart";
+
+//* define interface for the order
+interface IOrderStats {
+  totalOrders: number;
+  currentPage: number;
+  totalPages: number;
+  data: IOrderDB[];
+}
 
 const AdminDashboard = () => {
+  //* state for orders
+  const [orders, setOrders] = useState<IOrderStats>();
+  const [loading, setLoading] = useState(true);
+
+  //* token
+  const [token, setToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("authToken");
+    setToken(storedToken);
+  }, []);
+
+  //* all users' data
+  const [allUsers, setAllUsers] = useState<IUser[]>([]);
+
+  //* fetch orders
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const res = await getAllOrders(1, 100);
+        const resUsers = await getAllUsers(token as string);
+        // console.log(resUsers);
+        setOrders(res?.data);
+        setAllUsers(resUsers?.data);
+      } catch (err: any) {
+        console.error("Failed to load orders:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOrders();
+  }, [token]);
+
+  // console.log("data", orders);
+  // console.log("users data", allUsers);
+
+  const stats = {
+    ordersPlaced: orders?.data.length,
+    pendingDeliveries: orders?.data.filter(
+      (order) => order.shippingStatus === "PENDING",
+    ).length,
+    processing: orders?.data.filter(
+      (order) => order.shippingStatus === "PROCESSING",
+    ).length,
+    shipped: orders?.data.filter(
+      (order) => order.shippingStatus === "SHIPPED",
+    ).length,
+    canceled: orders?.data.filter(
+      (order) => order.shippingStatus === "CANCELLED",
+    ).length,
+    delivered: orders?.data.filter(
+      (order) => order.shippingStatus === "DELIVERED",
+    ).length,
+    outOfStock: orders?.data.filter((order) =>
+      order.products.some(
+        (item) => item.product && item.product.inStock === false,
+      ),
+    ).length,
+    revenue: orders?.data
+      .filter((order) => order.paymentStatus === "PAID")
+      .reduce((acc, order) => acc + order.totalPrice, 0),
+    totalSold: orders?.data
+      .reduce((acc, order) => acc + order.totalPrice, 0),
+    paymentPending: orders?.data.filter(
+      (order) => order.paymentStatus === "UNPAID",
+    ).length,
+    refunded: orders?.data.filter((order) => order.paymentStatus === "REFUNDED")
+      .length,
+  };
+
+  //* for the charts : pain unpaid, refunded
+  const ordersByDate = orders?.data.reduce((acc: Record<string, any>, order) => {
+    const date = new Date(order?.createdAt as string).toISOString().split("T")[0]; // "YYYY-MM-DD"
+    if (!acc[date]) {
+      acc[date] = { date, PAID: 0, UNPAID: 0, REFUNDED: 0 };
+    }
+    if (order.paymentStatus in acc[date]) {
+      acc[date][order.paymentStatus]++;
+    }
+    return acc;
+  }, {});
+  
+  const chartData = Object.values(ordersByDate || {}).sort(
+    (a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime()
+  );
+  // console.log("chart data", chartData);
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <h1 className="text-3xl font-bold text-gray-800 mb-8">Admin Dashboard</h1>
@@ -18,33 +130,59 @@ const AdminDashboard = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
         <StatCard
           title="Total Orders"
-          value="120"
-          icon={<ClipboardListIcon className="w-8 h-8 text-white" />}
+          // value={orders?.totalOrders.toString() as string}
+          value={(stats.ordersPlaced?.toString() as string) || "N/A"}
+          icon={<ClipboardListIcon className="w-8 h-8 text-black" />}
           color="from-indigo-500 to-purple-500"
+          // color="bg-opacity-20 backdrop-blur-sm from-indigo-500/60 to-purple-500/60"
         />
         <StatCard
           title="Pending Approvals"
-          value="15"
-          icon={<ChartBarIcon className="w-8 h-8 text-white" />}
+          value={(stats.pendingDeliveries?.toString() as string) || "N/A"}
+          icon={<ChartBarIcon className="w-8 h-8 text-black" />}
+          color="from-yellow-500 to-orange-500"
+        />
+        <StatCard
+          title="Processing"
+          value={(stats.processing?.toString() as string) || "N/A"}
+          icon={<ChartBarIcon className="w-8 h-8 text-black" />}
           color="from-yellow-500 to-orange-500"
         />
         <StatCard
           title="Out of Stock"
-          value={"5"}
-          icon={<ShoppingBagIcon className="w-8 h-8 text-white" />}
-          color="from-red-500 to-pink-500"
+          value={(stats.outOfStock?.toString() as string) || "N/A"}
+          icon={<ShoppingBagIcon className="w-8 h-8 text-black" />}
+          color="from-red-500 to-amber-500"
         />
         <StatCard
           title="Total Users"
-          value="300"
-          icon={<User className="w-8 h-8 text-white" />}
-          color="from-green-400 to-emerald-500"
+          value={(allUsers?.length?.toString() as string) || "N/A"}
+          icon={<User className="w-8 h-8 text-black" />}
+          color="from-emerald-600 to-green-500"
         />
         <StatCard
           title="Revenue"
-          value="$12,000"
-          icon={<DollarSignIcon className="w-8 h-8 text-white" />}
+          value={(stats?.revenue?.toString() as string) || "N/A"}
+          icon={<DollarSignIcon className="w-8 h-8 text-black" />}
           color="from-blue-500 to-cyan-500"
+        />
+        <StatCard
+          title="Total Sold"
+          value={(stats?.totalSold?.toString() as string) || "N/A"}
+          icon={<DollarSignIcon className="w-8 h-8 text-black" />}
+          color="from-purple-500 to-green-500"
+        />
+        <StatCard
+          title="Pending Payment"
+          value={(stats?.paymentPending?.toString() as string) || "N/A"}
+          icon={<LayoutList className="w-8 h-8 text-black" />}
+          color="from-amber-500 to-red-500"
+        />
+        <StatCard
+          title="Refunded"
+          value={(stats?.refunded?.toString() as string) || "N/A"}
+          icon={<RotateCcw className="w-8 h-8 text-black" />}
+          color="from-red-500 to-yellow-500"
         />
       </div>
 
@@ -52,6 +190,14 @@ const AdminDashboard = () => {
         <LinkCard title="Manage Medicines" href="/admin/medicines" />
         <LinkCard title="Manage Orders" href="/admin/orders" />
         <LinkCard title="Manage Users" href="/admin/users" />
+      </div>
+
+      <div className="mt-10">
+        <Chart chartData={chartData} />
+      </div>
+      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <BarChartComponent orders={orders?.data || []}/>
+        <PendingVsTotalPieChart orders={orders?.data || []}/>
       </div>
     </div>
   );
@@ -73,7 +219,7 @@ const StatCard = ({
   >
     <div>
       <p className="text-sm">{title}</p>
-      <h2 className="text-3xl font-bold">{value}</h2>
+      <h2 className="text-3xl font-bold text-white drop-shadow-lg">{value}</h2>
     </div>
     <div className="bg-white bg-opacity-20 p-3 rounded-full">{icon}</div>
   </div>

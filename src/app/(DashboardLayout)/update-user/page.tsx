@@ -1,17 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import { useEffect, useState } from 'react';
 import { updateUser } from '@/services/users'; 
 import { useUser } from '@/contexts/UserContext';
 import { toast } from 'sonner';
+import { updateUserCookie } from '@/app/actions/updateUserCookie';
+import Loading from '@/components/shared/Loading';
+import { getCurrentUser } from '@/services/AuthService';
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
 const UpdateUserProfilePage = () => {
-  const { user, isLoading } = useUser();
+  const { user, isLoading, setUser } = useUser();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    image: '',
+    address: '',
+    bloodGroup: '',
+    phone: '',
   });
   const [editing, setEditing] = useState(false);
 
@@ -20,12 +30,16 @@ const UpdateUserProfilePage = () => {
       setFormData({
         name: user.name || '',
         email: user.email || '',
+        image: user.image || '',
+        address: user.address || '',
+        bloodGroup: user.bloodGroup || '',
+        phone: user.phone || '',
       });
     }
   }, [user]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value,}));
   };
 
   const handleSave = async () => {
@@ -42,22 +56,83 @@ const UpdateUserProfilePage = () => {
       const res = await updateUser(user._id, formData, token);
       toast.success('Profile updated');
       setEditing(false);
+
+      //* Update the user context with the new name & await for SSR
+      await updateUserCookie({
+        ...user,             // keep existing user fields
+        name: formData.name,  // update if only the changed name 
+        image: formData.image, // update if only the changed image
+        address: formData.address,
+        bloodGroup: formData.bloodGroup,
+        phone: formData.phone,
+      });
+
+      //* Re-sync context from updated cookie/server
+      const updatedUser = await getCurrentUser();
+      if (updatedUser) {
+        setUser(updatedUser.userData);
+      }
     } catch {
       toast.error('Update failed');
     }
   };
 
-  if (isLoading || !user) return <div className="p-8">Loading profile...</div>;
+  if (isLoading || !user) return <div className="p-8"><Loading /></div>;
 
   return (
-    <div className="max-w-2xl mx-auto p-8 bg-white shadow-xl rounded-xl">
-      <h1 className="text-3xl font-semibold text-center text-gray-800 mb-6">Update User Profile</h1>
+    <div className="w-full mx-auto p-8 bg-white shadow-xl rounded-xl">
+      <h1 className="text-3xl font-semibold text-center text-[#4F46E5] mb-6">
+        Update {user?.name || "User"}&apos;s Profile
+      </h1>
+
+      <div className="justify-center flex items-center gap-2  relative mb-20">
+        <img
+          src={"https://i.ibb.co.com/G2xCfZf/interior-design-mountain-view.jpg"} 
+          alt={user?.name} 
+          className="w-full rounded-2xl h-68"
+        />
+        <Image 
+          src={user?.image || "https://github.com/shadcn.png"} 
+          alt={user?.name} 
+          width={100} 
+          height={100} 
+          className="rounded-full bg-cover w-32 h-32  absolute -bottom-10 border-2 border-[#4F46E5]"
+        />
+      </div>
 
       <div className="space-y-6">
         <ProfileField 
           label="Name" 
           value={formData.name} 
           name="name"
+          editing={editing} 
+          handleChange={handleChange}
+        />
+        <ProfileField 
+          label="Image URL" 
+          value={formData.image} 
+          name="image"
+          editing={editing} 
+          handleChange={handleChange}
+        />
+        <ProfileField 
+          label="Address" 
+          value={formData.address} 
+          name="address"
+          editing={editing} 
+          handleChange={handleChange}
+        />
+        <ProfileField 
+          label="Blood Group" 
+          value={formData.bloodGroup} 
+          name="bloodGroup"
+          editing={editing} 
+          handleChange={handleChange}
+        />
+        <ProfileField 
+          label="Phone" 
+          value={formData.phone} 
+          name="phone"
           editing={editing} 
           handleChange={handleChange}
         />
@@ -72,12 +147,18 @@ const UpdateUserProfilePage = () => {
 
         {!editing ? (
           <div className="flex justify-center">
-            <button 
-              onClick={() => setEditing(true)} 
-              className="bg-blue-600 text-white px-6 py-3 rounded-lg transition duration-300 transform hover:bg-blue-700 hover:scale-105"
+            {/* <CustomButton
+              textName='Edit Profile'
+              handleAnything={() => setEditing(true)}
+
+            /> */}
+            <Button 
+              variant='outline' 
+              className="w-full bg-indigo-500 text-white hover:text-black h-12"
+              onClick={() => setEditing(true)}
             >
               Edit Profile
-            </button>
+            </Button>
           </div>
         ) : (
           <div className="flex justify-center gap-4">
@@ -89,7 +170,7 @@ const UpdateUserProfilePage = () => {
             </button>
             <button
               onClick={() => {
-                setFormData({ name: user.name, email: user.email });
+                setFormData({ name: user.name, email: user.email, image: user.image || '', address: user.address || '', bloodGroup: user.bloodGroup || '', phone: user.phone || '' });
                 setEditing(false);
               }}
               className="bg-gray-300 text-gray-800 px-6 py-3 rounded-lg transition duration-300 transform hover:bg-gray-400 hover:scale-105"

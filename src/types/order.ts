@@ -8,6 +8,7 @@ export interface IProductItem {
   product?: TMedicine;
   price?: number;
   name?: string;
+  inStock?: boolean;
 }
 
 export type ShippingStatus = "PENDING" | "SHIPPED" | "DELIVERED" | "CANCELLED"
@@ -17,7 +18,7 @@ export interface IOrderDB {
   products: IProductItem[];
   user: IUser;
   totalPrice: number;
-  shippingStatus: "PENDING" | "PROCESSING" | "SHIPPED" | "DELIVERED" | string;
+  shippingStatus: "PENDING" | "PROCESSING" | "SHIPPED" | "DELIVERED" | "CANCELLED" | string;
   paymentStatus: "PAID" | "UNPAID" | "REFUNDED" | string;
   transactionId: string;
   isDeleted: boolean;

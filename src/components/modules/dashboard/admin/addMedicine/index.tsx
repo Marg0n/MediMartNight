@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { createProduct } from "@/services/Product";
 import { TMedicine } from "@/types";
+import { ClipboardPlus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -79,16 +81,16 @@ const AddMedicine = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-semibold text-center mb-4">
-        Add New Medicine
+    <div className="w-full mx-auto p-6 bg-white rounded-lg shadow-md">
+      <h2 className="text-center font-bold text-3xl mb-10 text-[#4F46E5] tracking-tight flex  justify-center items-center gap-2">
+        <ClipboardPlus size={30}/> Add New Medicine
       </h2>
 
       {error && (
         <p className="text-red-500 text-sm text-center mb-4">{error}</p>
       )}
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
         {/* Medicine Name */}
         <div className="mb-4">
           <label
@@ -244,6 +246,7 @@ const AddMedicine = () => {
             onChange={handleChange}
             required
             className="w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            placeholder="Beximco Pharmaceuticals Ltd."
           />
         </div>
 
@@ -362,12 +365,20 @@ const AddMedicine = () => {
           />
         </div>
 
-        <button
-          type="submit"
-          className="w-full mt-4 bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        >
-          Add Medicine
-        </button>
+        <div className="col-span-2">
+          {/* <CustomButton
+            textName="Add Medicine"
+            type='submit'
+            className="w-full"
+          /> */}
+          <Button
+            variant="outline"
+            onClick={handleSubmit}
+            className="w-full bg-indigo-500 text-white hover:text-black h-10"
+          >
+            Add Medicine
+          </Button>
+        </div>
       </form>
     </div>
   );

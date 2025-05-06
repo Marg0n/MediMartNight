@@ -27,12 +27,12 @@ const ProductCard = ({ medicine }: { medicine: TMedicine }) => {
   }
 
   return (
-    <div className="">
+    <>
       {/* Card Container */}
-      <div className="border p-4 rounded-md shadow-blue-200 transition-all duration-500 ease-in-out hover:-translate-y-2 hover:shadow-lg flex flex-col">
+      <div className="border p-4 w-72 rounded-md shadow-gray-200 transition-all duration-500 ease-in-out hover:-translate-y-2 hover:shadow-lg flex flex-col">
         <Link href={`/shop/${medicine?._id}`}>
           {/* Make image and name clickable via Link */}
-          <div className="relative w-full h-90 overflow-hidden rounded-md group">
+          <div className="relative w-full h-40 overflow-hidden rounded-md group">
             <Image
               src={medicine?.Img as string}
               alt={medicine?.name}
@@ -66,7 +66,7 @@ const ProductCard = ({ medicine }: { medicine: TMedicine }) => {
           </Button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

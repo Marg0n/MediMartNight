@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import Logo from "@/assets/images/logo/Logo";
-import CustomButton from "@/components/shared/CustomButton";
 import {
   Form,
   FormControl,
@@ -24,14 +23,15 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { loginSchema } from "./loginValidation";
+import { Button } from "@/components/ui/button";
 
 export default function LoginForm() {
-  // react hook form
+  //* react hook form
   const form = useForm({
     resolver: zodResolver(loginSchema),
   });
 
-  // toggle password
+  //* toggle password
   const [showPassword, setShowPassword] = useState(false);
 
   const [reCaptchaStatus, setReCaptchaStatus] = useState(false);
@@ -81,15 +81,58 @@ export default function LoginForm() {
     }
   };
 
+  //! Function to fill credentials
+  const fillCredentials = (type: "admin" | "user") => {
+    const credentials = {
+      admin: {
+        email: "mina@mail.com",
+        password: "1234",
+      },
+      user: {
+        email: "nina@mail.com",
+        password: "1234",
+      },
+    };
+
+    form.setValue("email", credentials[type].email);
+    form.setValue("password", credentials[type].password);
+  };
+
   return (
-    <div className="border-2 border-gray-300 rounded-xl flex-grow max-w-md w-full p-5">
+    <div className="border-2 border-gray-300 rounded-xl flex-grow max-w-md w-full p-5 space-y-6">
+
+      {/* logo */}
       <div className="flex items-center space-x-4 ">
-        <Logo />
+        <Link href='/'>
+          <Logo />
+        </Link>
         <div>
           <h1 className="text-xl font-semibold">Login</h1>
-          <p className="font-extralight text-sm text-gray-600">Welcome back!</p>
+          <p className="font-extralight text-sm text-gray-600">Welcome back dear user!</p>
         </div>
       </div>
+
+      {/* Buttons to fill credentials */}
+      <div className="flex justify-around space-x-2">
+        <Button
+          type="button"
+          variant="outline"
+          className="bg-[#4F46E5] text-white hover:text-black"
+          onClick={() => fillCredentials("admin")}
+        >
+          Fill Admin Credentials
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          className="bg-[#4F46E5] text-white hover:text-black"
+          onClick={() => fillCredentials("user")}
+        >
+          Fill User Credentials
+        </Button>
+      </div>
+
+      {/* form */}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
@@ -141,17 +184,25 @@ export default function LoginForm() {
             />
           </div>
 
-          <CustomButton
+          {/* <CustomButton
             disabled={reCaptchaStatus ? false : true}
             type="submit"
             className="mt-5! w-full"
             textName={isSubmitting ? "Logging...." : "Login"}
-          />
+          /> */}
+          <Button 
+            variant="outline" 
+            className="mt-5! w-full bg-[#4F46E5] text-white hover:text-black" 
+            type="submit"
+            disabled={reCaptchaStatus ? false : true}
+          >
+            {isSubmitting ? "Logging...." : "Login"}
+          </Button>
         </form>
       </Form>
       <p className="text-sm text-gray-600 text-center my-3">
         Do not have any account?
-        <Link href="/register" className="text-primary ml-2">
+        <Link href="/register" className="text-[#4F46E5] ml-2">
           Register
         </Link>
       </p>

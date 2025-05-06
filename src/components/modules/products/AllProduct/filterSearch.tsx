@@ -3,6 +3,8 @@
 "use client";
 
 
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { getAllProducts } from "@/services/Product";
 import { TMedicine } from "@/types";
 import { useEffect, useState } from "react";
@@ -72,8 +74,8 @@ const FilterSearch = ({
   };
 
   return (
-    <div className=" p-6 space-y-6 border rounded-lg shadow-lg bg-white  shadow-blue-200 transition-all duration-500 ease-in-out hover:-translate-y-2 hover:shadow-lg  border-gray-200">
-      <input
+    <div className="space-y-6  rounded-lg  bg-white  shadow-gray-200 transition-all duration-500 ease-in-out    border-gray-200">
+      <Input
         className="input input-bordered w-full"
         type="text"
         placeholder="🔍 Search by name..."
@@ -86,9 +88,9 @@ const FilterSearch = ({
         <label className="block text-lg font-semibold mb-2">
           🧪 Categories
         </label>
-        <div className="max-h-40 overflow-y-auto space-y-1">
+        <div className="min-h-40 space-y-1">
           {categories.map((category) => (
-            <label key={category} className="flex items-center space-x-2">
+            <label key={category} className="flex items-center space-x-2 text-sm">
               <input
                 type="checkbox"
                 checked={selectedCategories.includes(category)}
@@ -104,7 +106,7 @@ const FilterSearch = ({
       {/* Symptoms Filter */}
       <div>
         <label className="block text-lg font-semibold mb-2">💊 Symptoms</label>
-        <div className="max-h-40 overflow-y-auto space-y-1">
+        <div className="min-h-40 space-y-1">
           {symptoms.map((symptom) => (
             <label key={symptom} className="flex items-center space-x-2">
               <input
@@ -120,12 +122,12 @@ const FilterSearch = ({
       </div>
 
       <div className="flex gap-4 justify-end">
-        <button className="btn btn-primary" onClick={handleApply}>
+        <Button className="btn" variant="outline" onClick={handleApply}>
           ✅ Apply
-        </button>
-        <button className="btn btn-outline" onClick={handleReset}>
+        </Button>
+        <Button className="btn" variant="outline" onClick={handleReset}>
           🔄 Reset
-        </button>
+        </Button>
       </div>
     </div>
   );

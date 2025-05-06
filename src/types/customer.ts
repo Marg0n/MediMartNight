@@ -9,6 +9,9 @@ export interface IUser {
     createdAt?: string;
     updatedAt?: string;
     image?: string;
+    address?: string;
+    bloodGroup?: string;
+    phone?: string;
     iat?: number;
     exp?: number;
 }

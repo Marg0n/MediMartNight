@@ -2,7 +2,6 @@
 "use client";
 
 import Logo from "@/assets/images/logo/Logo";
-import CustomButton from "@/components/shared/CustomButton";
 import {
   Form,
   FormControl,
@@ -21,6 +20,7 @@ import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { registrationSchema } from "./registerValidation";
+import { Button } from "@/components/ui/button";
 
 export default function RegisterForm() {
   // react hook form
@@ -60,9 +60,11 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className="border-2 border-gray-300 rounded-xl flex-grow max-w-md w-full p-5">
+    <div className="border-2 border-gray-300 rounded-xl flex-grow max-w-md w-full p-5 space-y-6">
       <div className="flex items-center space-x-4 ">
-        <Logo />
+        <Link href='/'>
+          <Logo />
+        </Link>
         <div>
           <h1 className="text-xl font-semibold">Register</h1>
           <p className="font-extralight text-sm text-gray-600">
@@ -161,17 +163,25 @@ export default function RegisterForm() {
           />
 
           {/* submit button */}
-          <CustomButton
+          {/* <CustomButton
             disabled={Boolean(passwordConfirm && password !== passwordConfirm)}
             type="submit"
             className="mt-5! w-full"
             textName={isSubmitting ? "Registering...." : "Register"}
-          />
+          /> */}
+          <Button 
+            variant="outline" 
+            className="mt-5! w-full bg-[#4F46E5] text-white hover:text-black" 
+            type="submit"
+            disabled={Boolean(passwordConfirm && password !== passwordConfirm)}
+          >
+            {isSubmitting ? "Registering...." : "Register"}
+          </Button>
         </form>
       </Form>
       <p className="text-sm text-gray-600 text-center my-3">
         Already have an account?
-        <Link href="/login" className="text-primary ml-2">
+        <Link href="/login" className="text-[#4F46E5] ml-2">
           Login
         </Link>
       </p>

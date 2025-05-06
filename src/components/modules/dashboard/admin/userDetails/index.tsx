@@ -20,7 +20,7 @@ const UserDetailsPage = ({ user }: Props) => {
         const orders = data?.data?.data || [];
         // Filter orders for the specific user
         setOrdders(
-          orders.filter((order: IOrderDB) => order?.user?._id === user._id)
+          orders.filter((order: IOrderDB) => order?.user?._id === user._id),
         );
       } catch (error) {
         console.error("Failed to fetch Users:", error);
@@ -35,11 +35,11 @@ const UserDetailsPage = ({ user }: Props) => {
       <div className="max-w-xl mx-auto mt-10 bg-white shadow-xl rounded-lg p-8 border border-gray-200">
         <div className="flex items-center gap-6">
           <Image
-            src={`https://i.pravatar.cc/100?`}
+            src={(user?.image as string) || `https://i.pravatar.cc/100?`}
             alt="User Avatar"
             width={100}
             height={100}
-            className="rounded-full"
+            className="rounded-full w-24 h-24"
           />
           <div>
             <h2 className="text-3xl font-bold text-gray-800">{user?.name}</h2>
@@ -119,21 +119,31 @@ const UserDetailsPage = ({ user }: Props) => {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order, index) => (
-              <tr
-                key={index}
-                className="border-t border-gray-200 text-sm text-gray-800 hover:bg-gray-50"
-              >
-                <td className="px-4 py-2">{order.city}</td>
-                <td className="px-4 py-2">{order.products.length}</td>
-                <td className="px-4 py-2">${order.totalPrice}</td>
-                <td className="px-4 py-2">{order.shippingStatus}</td>
-                <td className="px-4 py-2">{order.paymentStatus}</td>
-                <td className="px-4 py-2">{order.transactionId}</td>
-                <td className="px-4 py-2">{order.isDeleted ? "Yes" : "No"}</td>
-                <td className="px-4 py-2">{order.shippingAddress}</td>
+            {orders.length > 0 ? (
+              orders.map((order, index) => (
+                <tr
+                  key={index}
+                  className="border-t border-gray-200 text-sm text-gray-800 hover:bg-gray-50"
+                >
+                  <td className="px-4 py-2">{order.city}</td>
+                  <td className="px-4 py-2">{order.products.length}</td>
+                  <td className="px-4 py-2">${order.totalPrice}</td>
+                  <td className="px-4 py-2">{order.shippingStatus}</td>
+                  <td className="px-4 py-2">{order.paymentStatus}</td>
+                  <td className="px-4 py-2">{order.transactionId}</td>
+                  <td className="px-4 py-2">
+                    {order.isDeleted ? "Yes" : "No"}
+                  </td>
+                  <td className="px-4 py-2">{order.shippingAddress}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={8} className="px-4 py-8 text-center text-gray-500">
+                  No Orders Data Found!
+                </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>

@@ -18,7 +18,7 @@ const CartProducts = () => {
             some items!
           </p>
           <div className="flex justify-center items-center ">
-            <Image src={emptyCart} alt="empty cart" />
+            <Image src={emptyCart} alt="empty cart" priority/>
           </div>
         </div>
       ) : (

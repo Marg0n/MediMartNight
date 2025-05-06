@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { deleteProduct, getAllProducts } from "@/services/Product";
@@ -9,23 +10,54 @@ import { toast } from "sonner";
 
 const ManageMedicine = () => {
   const [medicines, setMedicines] = useState<TMedicine[]>([]);
+  const [allMedicines, setAllMedicines] = useState<TMedicine[]>([]);
+  const [availableCategories, setAvailableCategories] = useState<string[]>([]);
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const limit = 10;
+
+  // Fetch all categories on initial load
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const data = await getAllProducts("1", "1000", {});
+        const medicines = data?.data?.result || [];
+        const categories = new Set<string>(
+          medicines
+            .map((med: TMedicine) => med.dosCategory as string)
+            .filter(Boolean),
+        );
+        setAvailableCategories(["All", ...Array.from(categories)]);
+      } catch (error) {
+        console.error("Failed to fetch categories:", error);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const data = await getAllProducts(
-          page.toString(),
-          limit.toString(),
-          {}
-        );
-        setMedicines(data?.data?.result || []);
-        const totalItems = data?.data?.meta?.total || 0;
+        const data = await getAllProducts(page.toString(), limit.toString(), {
+          category: selectedCategory !== "All" ? selectedCategory : undefined,
+        });
+        const fetchedMedicines = data?.data?.result || [];
+        setAllMedicines(fetchedMedicines);
+
+        // Apply search filter locally
+        const filteredMedicines = searchQuery
+          ? fetchedMedicines.filter((med: TMedicine) =>
+              med.name.toLowerCase().includes(searchQuery.toLowerCase()),
+            )
+          : fetchedMedicines;
+
+        setMedicines(filteredMedicines);
+        const totalItems = filteredMedicines.length;
         setTotalPages(Math.ceil(totalItems / limit));
       } catch (error) {
         console.error("Failed to fetch medicines:", error);
@@ -35,7 +67,31 @@ const ManageMedicine = () => {
     };
 
     fetchData();
-  }, [page]);
+  }, [page, selectedCategory]);
+
+  // Handle search locally
+  useEffect(() => {
+    if (searchQuery) {
+      const filtered = allMedicines.filter((med: TMedicine) =>
+        med.name.toLowerCase().includes(searchQuery.toLowerCase()),
+      );
+      setMedicines(filtered);
+      setTotalPages(Math.ceil(filtered.length / limit));
+    } else {
+      setMedicines(allMedicines);
+      setTotalPages(Math.ceil(allMedicines.length / limit));
+    }
+    setPage(1); // Reset to first page on search
+  }, [searchQuery, allMedicines]);
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCategory(e.target.value);
+    setPage(1); // Reset to first page on category change
+  };
 
   const handlePrev = () => {
     if (page > 1 && !isLoading) setPage(page - 1);
@@ -69,7 +125,7 @@ const ManageMedicine = () => {
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-10">
-      <h2 className="text-3xl font-bold mb-6 text-center text-indigo-700">
+      <h2 className="text-3xl font-bold mb-6 text-center text-[#4F46E5]">
         🧾 Manage All Medicines
       </h2>
       {/* Search & Filter */}
@@ -78,10 +134,19 @@ const ManageMedicine = () => {
           type="text"
           placeholder="🔍 Search by name..."
           className="w-full md:w-1/3 px-4 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          value={searchQuery}
+          onChange={handleSearch}
         />
-        <select className="w-full md:w-1/4 px-4 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
-          <option>All</option>
-          <option>Comming Soon</option>
+        <select
+          className="w-full md:w-1/4 px-4 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          value={selectedCategory}
+          onChange={handleCategoryChange}
+        >
+          {availableCategories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
         </select>
       </div>
       <div className="overflow-x-auto shadow-lg rounded-lg bg-white dark:bg-gray-900">
@@ -96,7 +161,7 @@ const ManageMedicine = () => {
                   >
                     {title}
                   </th>
-                )
+                ),
               )}
             </tr>
           </thead>
@@ -141,7 +206,7 @@ const ManageMedicine = () => {
                   </td>
                   <td className=" text-center">
                     <Link href={`/admin/medicines/${med._id}`}>
-                      <div className="inline-flex items-center justify-center p-2 text-blue-600 hover:text-white hover:bg-blue-600 rounded-full transition">
+                      <div className="inline-flex items-center justify-center p-2 text-blue-600 hover:text-white hover:bg-[#4F46E5] rounded-full transition">
                         <PencilIcon className="h-5 w-5" />
                       </div>
                     </Link>

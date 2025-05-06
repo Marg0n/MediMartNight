@@ -7,7 +7,7 @@ export const metadata = {
 
 const ShopPage = () => {
   return (
-    <div className="p-8">
+    <div className="">
       <AllProducts />
     </div>
   );

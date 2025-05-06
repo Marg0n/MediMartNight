@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
-import { ChevronsUpDown } from "lucide-react";
+import { LogOut } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
@@ -16,30 +14,35 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { protectedRoutes } from "@/contants";
 import { useUser } from "@/contexts/UserContext";
+import { resetCart } from "@/redux/features/cartSlice";
+import { useAppDispatch } from "@/redux/hooks";
 import { logout } from "@/services/AuthService";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
-  const { user, setIsLoading } = useUser();
+  const { user, setUser } = useUser();
 
-  const router = useRouter();
+  // const router = useRouter();
   const pathname = usePathname();
 
-  const handleLogout = () => {
-    logout();
-    setIsLoading(true);
+  //* redux
+  const dispatch = useAppDispatch();
 
-    if (protectedRoutes.some((route) => pathname.match(route))) {
-      router.push("/");
-    }
+  //! logout
+  const handleLogout = async () => {
+    await logout();
+    setUser(null);
+    dispatch(resetCart());
+
+    // if (protectedRoutes.some((route) => pathname.match(route))) {
+    window.location.href = "/";
+    // }
   };
 
   return (
-    <Link href="/">
+    <>
       <SidebarMenu>
         <SidebarMenuItem>
           <DropdownMenu>
@@ -47,9 +50,16 @@ export function NavUser() {
               <SidebarMenuButton
                 size="lg"
                 className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                onClick={handleLogout}
               >
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage alt={user?.name} />
+                  <AvatarImage
+                    src={
+                      user?.image ||
+                      "https://i.ibb.co.com/Fz38g1t/human-celebrating.png"
+                    }
+                    alt={user?.name}
+                  />
                   <AvatarFallback className="rounded-lg">
                     {user?.role}
                   </AvatarFallback>
@@ -58,10 +68,11 @@ export function NavUser() {
                   <span className="truncate font-semibold">{user?.name}</span>
                   <span className="truncate text-xs">{user?.email}</span>
                 </div>
-                <ChevronsUpDown className="ml-auto size-4" />
+                <LogOut />
+                {/* <ChevronsUpDown className="ml-auto size-4" /> */}
               </SidebarMenuButton>
             </DropdownMenuTrigger>
-            <DropdownMenuContent
+            {/* <DropdownMenuContent
               className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
               side={isMobile ? "bottom" : "right"}
               align="end"
@@ -81,15 +92,15 @@ export function NavUser() {
                   </div>
                 </div>
               </DropdownMenuLabel>
-              {/* <DropdownMenuItem> */}
-              {/* <LogOut />
-              Log out */}
-              {/* Go To Home */}
-              {/* </DropdownMenuItem> */}
-            </DropdownMenuContent>
+              <DropdownMenuItem>
+              <LogOut />
+              Log out
+              Go To Home
+              </DropdownMenuItem>
+            </DropdownMenuContent> */}
           </DropdownMenu>
         </SidebarMenuItem>
       </SidebarMenu>
-    </Link>
+    </>
   );
 }

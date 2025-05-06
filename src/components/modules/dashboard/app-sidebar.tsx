@@ -4,7 +4,6 @@ import { Bot, Settings, SquareTerminal } from "lucide-react";
 import * as React from "react";
 
 import Logo from "@/assets/images/logo/Logo";
-import { Button } from "@/components/ui/button";
 import {
   Sidebar,
   SidebarContent,
@@ -17,9 +16,12 @@ import {
 import { useUser } from "@/contexts/UserContext";
 import Link from "next/link";
 import { NavMain } from "./nav-main";
+import { NavUser } from "./nav-user";
 // import { NavUser } from "./nav-user";
 
 const data = {
+
+  //* admin nav items
   adminNavItem: [
     {
       title: "Dashboard",
@@ -29,7 +31,7 @@ const data = {
     },
     {
       title: "Manage",
-      url: "/admin",
+      url: "/admin/medicines",
       icon: Bot,
       items: [
         {
@@ -46,14 +48,14 @@ const data = {
         },
         {
           title: "Manage Orders",
-          url: "/admin/orders",
+          url: "/admin/manage-orders",
         },
       ],
     },
 
     {
       title: "Settings",
-      url: "/update-user",
+      url: "/profile",
       icon: Settings,
       items: [
         {
@@ -67,8 +69,8 @@ const data = {
       ],
     },
   ],
-  // customer nav items
-  //Akbar Shanto vai ekhane customer er jonne nav items add korben
+
+  //* customer nav items
   customerNavItem: [
     {
       title: "Dashboard",
@@ -78,7 +80,7 @@ const data = {
     },
     {
       title: "Manage",
-      url: "/customer",
+      url: "/customer/orders",
       icon: Bot,
       items: [
         // {
@@ -98,7 +100,7 @@ const data = {
     //ekhane change kora lagbe na eta common rekhechi
     {
       title: "Settings",
-      url: "/update-user",
+      url: "/profile",
       icon: Settings,
       items: [
         {
@@ -131,8 +133,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     <Logo />
                   </div>
                   {/* <div className="grid flex-1 text-left text-sm leading-tight">
-   <h2 className="font-bold text-xl">MediMart</h2>
- </div> */}
+                      <h2 className="font-bold text-xl">MediMart</h2>
+                    </div> */}
                 </Link>
               ) : (
                 <Link href="/customer">
@@ -140,8 +142,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     <Logo />
                   </div>
                   {/* <div className="grid flex-1 text-left text-sm leading-tight">
-   <h2 className="font-bold text-xl">MediMart</h2>
- </div> */}
+                      <h2 className="font-bold text-xl">MediMart</h2>
+                    </div> */}
                 </Link>
               )}
             </SidebarMenuButton>
@@ -158,10 +160,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         }
       </SidebarContent>
       <SidebarFooter>
-        {/* <NavUser /> */}
-        <Button>
+        <NavUser />
+        {/* <Button>
           <Link href="/">Back To Home</Link>
-        </Button>
+        </Button> */}
       </SidebarFooter>
     </Sidebar>
   );

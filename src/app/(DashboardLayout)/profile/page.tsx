@@ -1,24 +1,91 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-'use client';
+/* eslint-disable @next/next/no-img-element */
 
-import { useUser } from '@/contexts/UserContext';
-import { UserIcon, MailIcon, ShieldCheckIcon } from 'lucide-react';
+"use client";
+
+import Loading from "@/components/shared/Loading";
+import { useUser } from "@/contexts/UserContext";
+import {
+  DropletIcon,
+  MailIcon,
+  MapPinIcon,
+  PhoneIcon,
+  ShieldCheckIcon,
+  UserIcon,
+} from "lucide-react";
+import Image from "next/image";
 
 const UserProfilePage = () => {
   const { user, isLoading } = useUser();
 
-  if (isLoading || !user) return <div className="p-8">Loading profile...</div>;
+  if (isLoading || !user)
+    return (
+      <div className="p-8">
+        <Loading />
+      </div>
+    );
 
   return (
-    <div className="max-w-4xl mx-auto p-8 bg-white shadow-lg rounded-xl">
-      <h1 className="text-3xl font-semibold text-gray-800 mb-6 text-center">User Profile</h1>
+    <div className="w-full mx-auto p-8 bg-white shadow-lg rounded-xl">
+      {/* Header */}
+      <h1 className="text-3xl text-[#4F46E5] font-semibold mb-6 flex justify-center items-center gap-2">
+        {user?.name || "User"}&apos;s Profile
+      </h1>
 
-      <div className="space-y-6">
-        <ProfileField label="Name" value={user.name} icon={<UserIcon className="w-5 h-5 text-gray-600" />} />
-        <ProfileField label="Email" value={user.email} icon={<MailIcon className="w-5 h-5 text-gray-600" />} />
-        <ProfileField label="Role" value={user.role} icon={<ShieldCheckIcon className="w-5 h-5 text-gray-600" />} />
-        <ProfileField label="Status" value={user.status || 'active'} icon={<ShieldCheckIcon className="w-5 h-5 text-gray-600" />} />
+      {/* Cover image + Avatar */}
+      <div className="justify-center flex items-center gap-2 relative mb-20">
+        <img
+          src="https://i.ibb.co.com/G2xCfZf/interior-design-mountain-view.jpg"
+          alt={user?.name}
+          className="w-full rounded-2xl h-68 object-fit"
+        />
+        <Image
+          src={
+            user?.image || "https://i.ibb.co.com/Fz38g1t/human-celebrating.png"
+          }
+          alt={user?.name}
+          width={100}
+          height={100}
+          className="rounded-full w-32 h-32 absolute -bottom-10 border-2 border-[#4F46E5] shadow-lg"
+        />
+      </div>
+
+      {/* Profile fields */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+        <ProfileField
+          label="Name"
+          value={user.name}
+          icon={<UserIcon className="w-5 h-5 text-blue-600" />}
+        />
+        <ProfileField
+          label="Email"
+          value={user.email}
+          icon={<MailIcon className="w-5 h-5 text-emerald-600" />}
+        />
+        <ProfileField
+          label="Role"
+          value={user.role}
+          icon={<ShieldCheckIcon className="w-5 h-5 text-purple-600" />}
+        />
+        <ProfileField
+          label="Status"
+          value={user.status || "Active"}
+          icon={<ShieldCheckIcon className="w-5 h-5 text-gray-500" />}
+        />
+        <ProfileField
+          label="Address"
+          value={user.address || "Not Provided"}
+          icon={<MapPinIcon className="w-5 h-5 text-orange-500" />}
+        />
+        <ProfileField
+          label="Phone"
+          value={user.phone || "Not Provided"}
+          icon={<PhoneIcon className="w-5 h-5 text-sky-600" />}
+        />
+        <ProfileField
+          label="Blood Group"
+          value={user.bloodGroup || "Not Provided"}
+          icon={<DropletIcon className="w-5 h-5 text-red-500" />}
+        />
       </div>
     </div>
   );
@@ -38,7 +105,9 @@ const ProfileField = ({
       {icon}
       <p className="text-lg font-medium text-gray-700">{label}</p>
     </div>
-    <p className="text-lg text-gray-800 font-semibold">{String(value)}</p>
+    <p className="text-lg text-gray-800 font-semibold truncate max-w-[60%] text-right">
+      {String(value)}
+    </p>
   </div>
 );
 
