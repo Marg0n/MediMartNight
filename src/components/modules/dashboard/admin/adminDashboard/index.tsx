@@ -19,7 +19,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Chart } from './charts/Chart';
 import Loading from "@/components/shared/Loading";
-
+import { BarChartComponent } from "./charts/BarChart";
+import { PendingVsTotalPieChart } from "./charts/PieChart";
 
 //* define interface for the order
 interface IOrderStats {
@@ -177,6 +178,12 @@ const AdminDashboard = () => {
 
       <div className="mt-10">
         <Chart chartData={chartData} />
+      </div>
+      <div className="mt-10">
+        <BarChartComponent orders={orders?.data || []}/>
+      </div>
+      <div className="mt-10">
+        <PendingVsTotalPieChart orders={orders?.data || []}/>
       </div>
     </div>
   );

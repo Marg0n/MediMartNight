@@ -45,7 +45,7 @@ const chartDataFromStats = (stats: CustomerStats) => [
 ]
 
 
-// ✅ Color config using chart CSS tokens
+//* Color config using chart CSS tokens
 const chartConfig: ChartConfig = {
   placed: { label: "Orders Placed", color: "hsl(var(--chart-1))" },
   pending: { label: "Pending Deliveries", color: "hsl(var(--chart-2))" },
