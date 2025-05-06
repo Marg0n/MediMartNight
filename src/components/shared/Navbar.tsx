@@ -11,6 +11,7 @@ import { useState } from "react";
 import { protectedRoutes } from "@/contants";
 import { logout } from "@/services/AuthService";
 
+import SearchBox from "@/components/shared/SearchBox";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -23,7 +24,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { resetCart } from "@/redux/features/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import SearchBox from "@/components/shared/SearchBox";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -86,8 +86,14 @@ const Navbar = () => {
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <Avatar>
-                  <AvatarImage src={user?.image || 'https://i.ibb.co.com/8dJbHdP/No-Photo-Available.webp'} alt={user?.name} />
-                  <AvatarFallback>{user?.name || 'User'}</AvatarFallback>
+                  <AvatarImage
+                    src={
+                      user?.image ||
+                      "https://i.ibb.co.com/Fz38g1t/human-celebrating.png"
+                    }
+                    alt={user?.name}
+                  />
+                  <AvatarFallback>{user?.name || "User"}</AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
@@ -95,7 +101,9 @@ const Navbar = () => {
                   {user?.name}{" "}
                   <Badge
                     className={
-                      user?.role === "admin" ? `bg-purple-400` : `bg-[#4F46E5] text-white`
+                      user?.role === "admin"
+                        ? `bg-purple-400`
+                        : `bg-[#4F46E5] text-white`
                     }
                   >
                     {user?.role}
@@ -126,14 +134,18 @@ const Navbar = () => {
           ) : (
             <Link href="/login">
               {/* <CustomButton textName="Login" className="py-1!" /> */}
-              <Button variant="outline">
-                Login
-              </Button>
+              <Button variant="outline">Login</Button>
             </Link>
           )}
           <Link href={"/cart"} className="relative">
-            <ShoppingBasket className="cursor-pointer hover:scale-105 border-2 border-gray-300 rounded-full" size={30}/>
-            <Badge variant="outline" className="absolute -top-2 -right-2 bg-blue-300">
+            <ShoppingBasket
+              className="cursor-pointer hover:scale-105 border-2 border-gray-300 rounded-full"
+              size={30}
+            />
+            <Badge
+              variant="outline"
+              className="absolute -top-2 -right-2 bg-blue-300"
+            >
               {cartItems.length}
             </Badge>
           </Link>
@@ -149,7 +161,10 @@ const Navbar = () => {
             {menuOpen ? <X size={24} /> : <Menu size={24} />}
           </Button>
           <Link href={"/cart"} className="relative">
-            <ShoppingBasket className="cursor-pointer hover:scale-105 border-2 border-gray-200 rounded-full" size={30}/>
+            <ShoppingBasket
+              className="cursor-pointer hover:scale-105 border-2 border-gray-200 rounded-full"
+              size={30}
+            />
             <Badge variant="outline" className="absolute -top-2 -right-2">
               {cartItems.length}
             </Badge>

@@ -1,18 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 "use client";
 
+import Loading from "@/components/shared/Loading";
 import { useUser } from "@/contexts/UserContext";
 import {
-  UserIcon,
+  DropletIcon,
   MailIcon,
-  ShieldCheckIcon,
   MapPinIcon,
   PhoneIcon,
-  DropletIcon,
+  ShieldCheckIcon,
+  UserIcon,
 } from "lucide-react";
-import Loading from "@/components/shared/Loading";
 import Image from "next/image";
 
 const UserProfilePage = () => {
@@ -40,7 +39,9 @@ const UserProfilePage = () => {
           className="w-full rounded-2xl h-68 object-fit"
         />
         <Image
-          src={user?.image || "https://i.ibb.co.com/8dJbHdP/No-Photo-Available.webp"}
+          src={
+            user?.image || "https://i.ibb.co.com/Fz38g1t/human-celebrating.png"
+          }
           alt={user?.name}
           width={100}
           height={100}

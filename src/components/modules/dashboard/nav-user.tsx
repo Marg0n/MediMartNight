@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
-import { ChevronsUpDown, LogOut } from "lucide-react";
+import { LogOut } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
@@ -16,13 +14,11 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { protectedRoutes } from "@/contants";
 import { useUser } from "@/contexts/UserContext";
-import { logout } from "@/services/AuthService";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useAppDispatch } from "@/redux/hooks";
 import { resetCart } from "@/redux/features/cartSlice";
+import { useAppDispatch } from "@/redux/hooks";
+import { logout } from "@/services/AuthService";
+import { usePathname } from "next/navigation";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
@@ -35,13 +31,13 @@ export function NavUser() {
   const dispatch = useAppDispatch();
 
   //! logout
-  const handleLogout = async() => {
+  const handleLogout = async () => {
     await logout();
     setUser(null);
     dispatch(resetCart());
 
     // if (protectedRoutes.some((route) => pathname.match(route))) {
-      window.location.href = "/";
+    window.location.href = "/";
     // }
   };
 
@@ -57,7 +53,13 @@ export function NavUser() {
                 onClick={handleLogout}
               >
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user?.image || 'https://i.ibb.co.com/8dJbHdP/No-Photo-Available.webp'} alt={user?.name} />
+                  <AvatarImage
+                    src={
+                      user?.image ||
+                      "https://i.ibb.co.com/Fz38g1t/human-celebrating.png"
+                    }
+                    alt={user?.name}
+                  />
                   <AvatarFallback className="rounded-lg">
                     {user?.role}
                   </AvatarFallback>
