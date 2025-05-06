@@ -13,7 +13,7 @@ import {
 import { useUser } from "@/contexts/UserContext";
 import { getOrdersByUserId } from "@/services/orders";
 import { IOrderDB } from "@/types/order";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import { ChevronDown, ChevronRight, ScrollText } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
 const ViewOrders = () => {
@@ -75,45 +75,26 @@ const ViewOrders = () => {
   }
 
   return (
-    <div className="w-full min-h-full p-6 border-2 shadow-md rounded-2xl">
-      <h2 className="text-center font-bold text-3xl mb-14 text-[#4F46E5]">
-        All of Your Orders
+    <div className="w-full min-h-full p-6 border-2 shadow-md rounded-2xl bg-white">
+      <h2 className="flex justify-center items-center gap-2 font-bold text-3xl mb-14 text-[#4F46E5]">
+        <ScrollText size={30} />All of Your Orders
       </h2>
 
-      <Table>
-        <TableCaption className="mt-8">
-          {/* A list of your recent Orders */}
+      <Table className="border-collapse">
+        <TableCaption className="mt-8 text-gray-500 italic">
+          Your order history and details
         </TableCaption>
         <TableHeader>
-          <TableRow>
-            {/* <TableHead>Product Name</TableHead> */}
-            <TableHead>Order Date</TableHead>
-            <TableHead>Payment</TableHead>
-            <TableHead>Shipping</TableHead>
-            <TableHead>Shipping Address</TableHead>
-            <TableHead className="text-right">Shipping Cost</TableHead>
-            {/* <TableHead className="text-right">Quantity</TableHead> */}
-            {/* <TableHead className="text-right">Price</TableHead> */}
-            <TableHead className="text-right">Total Amount</TableHead>
+          <TableRow className="bg-gradient-to-r from-indigo-600 to-purple-600">
+            <TableHead className="text-white font-bold py-4">Order Date</TableHead>
+            <TableHead className="text-white font-bold">Payment</TableHead>
+            <TableHead className="text-white font-bold">Shipping</TableHead>
+            <TableHead className="text-white font-bold">Shipping Address</TableHead>
+            <TableHead className="text-white font-bold text-right">Shipping Cost</TableHead>
+            <TableHead className="text-white font-bold text-right">Total Amount</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {/* {orders?.map((order) =>
-          order.products.map((product, index) => (
-            <TableRow key={`${order._id}-${index}`}>
-              <TableCell className="font-medium">
-                {product.name || "N/A"}
-              </TableCell>
-              <TableCell>{order.paymentStatus}</TableCell>
-              <TableCell>{order.shippingStatus}</TableCell>
-              <TableCell>{order.shippingAddress}</TableCell>
-              <TableCell className="text-right">{order.shippingCost}</TableCell>
-              <TableCell className="text-right">{product.quantity}</TableCell>
-              <TableCell className="text-right">{product.price}</TableCell>
-              <TableCell className="text-right">${order.totalPrice}</TableCell>
-            </TableRow>
-          ))
-        )} */}
           {orders.map((order) => {
             const isOpen = openOrderId === order._id;
 
@@ -122,24 +103,33 @@ const ViewOrders = () => {
                 {/*   Parent row that toggles sub-row */}
                 <TableRow
                   onClick={() => setOpenOrderId(isOpen ? null : order._id)}
-                  className="cursor-pointer hover:bg-gray-50"
+                  className="cursor-pointer hover:bg-gray-50 border-b transition-colors duration-200"
                 >
                   <TableCell className="font-medium flex items-center gap-2">
                     {isOpen ? (
-                      <ChevronDown size={16} />
+                      <ChevronDown size={16} className="text-indigo-600" />
                     ) : (
-                      <ChevronRight size={16} />
+                      <ChevronRight size={16} className="text-indigo-600" />
                     )}
-                    {/* Order #{order._id.slice(-6)} */}
                     {new Date(order?.createdAt as string).toLocaleString()}
                   </TableCell>
-                  <TableCell>{order.paymentStatus}</TableCell>
-                  <TableCell>{order.shippingStatus}</TableCell>
-                  <TableCell>{order.shippingAddress}</TableCell>
-                  <TableCell className="text-right">
-                    {order.shippingCost}
+                  <TableCell className={`font-medium ${
+                    order.paymentStatus === 'PAID' ? 'text-green-600' : 
+                    order.paymentStatus === 'UNPAID' ? 'text-red-600' : 'text-orange-600'
+                  }`}>
+                    {order.paymentStatus}
                   </TableCell>
-                  <TableCell className="text-right font-semibold">
+                  <TableCell className={`font-medium ${
+                    order.shippingStatus === 'DELIVERED' ? 'text-green-600' :
+                    order.shippingStatus === 'PENDING' ? 'text-orange-600' : 'text-blue-600'
+                  }`}>
+                    {order.shippingStatus}
+                  </TableCell>
+                  <TableCell>{order.shippingAddress}</TableCell>
+                  <TableCell className="text-right font-medium">
+                    ${order.shippingCost}
+                  </TableCell>
+                  <TableCell className="text-right font-bold text-indigo-600">
                     ${order.totalPrice}
                   </TableCell>
                 </TableRow>
@@ -147,25 +137,25 @@ const ViewOrders = () => {
                 {/* Conditionally rendered sub-table for product details */}
                 {isOpen && (
                   <TableRow>
-                    <TableCell colSpan={6} className="bg-gray-100 p-4">
+                    <TableCell colSpan={6} className="bg-gray-50 p-4">
                       <Table>
                         <TableHeader>
-                          <TableRow>
-                            <TableHead>Product Name</TableHead>
-                            <TableHead className="text-right">
+                          <TableRow className="bg-gradient-to-r from-gray-100 to-gray-200">
+                            <TableHead className="font-semibold text-gray-700">Product Name</TableHead>
+                            <TableHead className="text-right font-semibold text-gray-700">
                               Quantity
                             </TableHead>
-                            <TableHead className="text-right">Price</TableHead>
+                            <TableHead className="text-right font-semibold text-gray-700">Price</TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
                           {order.products.map((product, idx) => (
-                            <TableRow key={idx}>
-                              <TableCell>{product.name || "N/A"}</TableCell>
+                            <TableRow key={idx} className="hover:bg-gray-100">
+                              <TableCell className="font-medium">{product.name || "N/A"}</TableCell>
                               <TableCell className="text-right">
                                 {product.quantity}
                               </TableCell>
-                              <TableCell className="text-right">
+                              <TableCell className="text-right font-medium">
                                 ${product.price}
                               </TableCell>
                             </TableRow>
