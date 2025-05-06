@@ -37,10 +37,10 @@ const UserProfilePage = () => {
         <img
           src="https://i.ibb.co.com/G2xCfZf/interior-design-mountain-view.jpg"
           alt={user?.name}
-          className="w-full rounded-2xl h-68 object-cover"
+          className="w-full rounded-2xl h-68 object-fit"
         />
         <Image
-          src={user?.image || "https://github.com/shadcn.png"}
+          src={user?.image || "https://i.ibb.co.com/8dJbHdP/No-Photo-Available.webp"}
           alt={user?.name}
           width={100}
           height={100}

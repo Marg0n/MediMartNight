@@ -86,7 +86,7 @@ const Navbar = () => {
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <Avatar>
-                  <AvatarImage src={user?.image || 'https://github.com/shadcn.png'} alt={user?.name} />
+                  <AvatarImage src={user?.image || 'https://i.ibb.co.com/8dJbHdP/No-Photo-Available.webp'} alt={user?.name} />
                   <AvatarFallback>{user?.name || 'User'}</AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
