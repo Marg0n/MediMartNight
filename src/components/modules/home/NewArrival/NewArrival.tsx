@@ -38,13 +38,14 @@ const NewArrival = () => {
       const res = await getAllProducts(
         pageNum.toString(),
         limit.toString(),
-        filters
+        filters,
       );
 
       const newProducts = res?.data?.result || [];
 
       const sorted = [...newProducts].sort(
-        (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+        (a, b) =>
+          new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
       );
 
       const filtered = await sorted.filter((m) => m.updatedAt && m.Img);
@@ -92,7 +93,35 @@ const NewArrival = () => {
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
   };
 
-  if (loading) return <div className="text-center py-10">Loading new arrivals...</div>;
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 md:max-h-[60vh] mt-16 md:mb-12 animate-pulse">
+        <h2 className="text-4xl font-extrabold text-center mb-10 bg-gradient-to-r from-indigo-600 to-rose-500 bg-clip-text text-transparent">
+          New Arrivals
+        </h2>
+
+        <div className="relative w-full bg-white rounded-xl shadow-md p-6 flex flex-col md:flex-row items-center gap-6 md:max-h-[50vh]">
+          <div className="bg-gray-200 rounded-lg w-full md:w-1/3 h-56" />
+
+          <div className="w-full md:w-2/3 space-y-3 px-4">
+            <div className="bg-gray-200 h-6 w-3/4 rounded" />
+            <div className="bg-gray-200 h-4 w-1/2 rounded" />
+            <div className="bg-gray-300 h-5 w-20 rounded" />
+            <div className="bg-gray-200 h-4 w-full rounded" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 mt-2">
+              <div className="bg-gray-200 h-4 w-full rounded" />
+              <div className="bg-gray-200 h-4 w-full rounded" />
+              <div className="bg-gray-200 h-4 w-full rounded" />
+              <div className="bg-gray-200 h-4 w-full rounded" />
+              <div className="bg-gray-200 h-4 w-full rounded" />
+              <div className="bg-gray-200 h-4 w-full rounded" />
+            </div>
+            <div className="bg-gray-100 h-3 w-1/3 rounded mt-2" />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 md:max-h-[60vh] mt-16 md:mb-12">
@@ -118,22 +147,45 @@ const NewArrival = () => {
             />
 
             <div className="w-full md:w-2/3 md:!h-56 h-72 space-y-2 text-gray-800 px-4">
-              <h3 className="text-2xl font-bold">{slides[currentSlide].name}</h3>
-              <p className="text-sm text-gray-500 italic">{slides[currentSlide].brand}</p>
-              <p className="text-lg font-semibold text-green-600">৳ {slides[currentSlide].price}</p>
+              <h3 className="text-2xl font-bold">
+                {slides[currentSlide].name}
+              </h3>
+              <p className="text-sm text-gray-500 italic">
+                {slides[currentSlide].brand}
+              </p>
+              <p className="text-lg font-semibold text-green-600">
+                ৳ {slides[currentSlide].price}
+              </p>
               <p className="text-sm">{slides[currentSlide].description}</p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 text-sm mt-2">
-                <p><strong>Generic:</strong> {slides[currentSlide].genericName}</p>
-                <p><strong>Strength:</strong> {slides[currentSlide].strength}</p>
-                <p><strong>Dose:</strong> {slides[currentSlide].dosCategory}</p>
-                <p><strong>Symptoms:</strong> {slides[currentSlide].symptoms}</p>
-                <p><strong>Prescription:</strong> {slides[currentSlide].requiredPrescription}</p>
-                <p><strong>Expiry:</strong> {new Date(slides[currentSlide].expiryDate).toLocaleDateString()}</p>
+                <p>
+                  <strong>Generic:</strong> {slides[currentSlide].genericName}
+                </p>
+                <p>
+                  <strong>Strength:</strong> {slides[currentSlide].strength}
+                </p>
+                <p>
+                  <strong>Dose:</strong> {slides[currentSlide].dosCategory}
+                </p>
+                <p>
+                  <strong>Symptoms:</strong> {slides[currentSlide].symptoms}
+                </p>
+                <p>
+                  <strong>Prescription:</strong>{" "}
+                  {slides[currentSlide].requiredPrescription}
+                </p>
+                <p>
+                  <strong>Expiry:</strong>{" "}
+                  {new Date(
+                    slides[currentSlide].expiryDate,
+                  ).toLocaleDateString()}
+                </p>
               </div>
 
               <p className="text-xs text-gray-400 mt-2">
-                Updated: {new Date(slides[currentSlide].updatedAt).toLocaleString()}
+                Updated:{" "}
+                {new Date(slides[currentSlide].updatedAt).toLocaleString()}
               </p>
             </div>
           </>
