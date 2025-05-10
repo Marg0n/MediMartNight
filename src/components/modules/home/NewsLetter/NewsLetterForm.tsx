@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+
 "use client"
 import { toast } from "sonner";
 import React from "react";
@@ -19,7 +19,11 @@ const NewsletterForm = () => {
   };
 
   return (
-    <section className="container mx-auto px-4 w-full min-h-[55vh] rounded-4xl mb-12 md:mb-0">
+    <section className="container mx-auto px-4 w-full min-h-[60vh] rounded-4xl">
+      <h2 className="text-4xl font-extrabold text-center mb-10 bg-gradient-to-r from-indigo-600 to-rose-500 bg-clip-text text-transparent">
+        Subscribe to Our Newsletter
+      </h2>
+
       <div className="flex lg:flex-row flex-col items-center justify-between gap-[50px] lg:gap-[20px]">
         <div className="w-full sm:w-[80%] lg:w-[50%]">
           <Image
@@ -42,11 +46,13 @@ const NewsletterForm = () => {
 
           <form className="mt-12 relative" onSubmit={handleSubmit}>
             <input
-              placeholder="Email Address"
+              type="email"
               name="email"
+              placeholder="Email Address"
+              autoComplete="email"
+              required
               className="w-full py-4 pl-4 pr-[120px] outline-none focus:ring-0 border rounded-full border-[#00b0ff]"
             />
-
             <button
               type="submit"
               className="px-8 py-3 absolute top-0 right-0 h-full rounded-full rounded-tl-[0px] hover:bg-[#02aaf2] bg-[#00b0ff] text-white"
@@ -54,6 +60,7 @@ const NewsletterForm = () => {
               Submit
             </button>
           </form>
+
         </div>
       </div>
     </section>
