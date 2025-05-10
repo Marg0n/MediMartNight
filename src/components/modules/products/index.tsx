@@ -34,15 +34,15 @@ const AllProducts = () => {
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-6 xl:grid-cols-7 gap-6 justify-items-center content-center">
+      <div className="grid grid-cols-1 lg:grid-cols-6 xl:grid-cols-7 !gap-2 justify-items-between content-center">
         {/* Product List */}
-        <div className="lg:col-span-4 xl:col-span-5  p-6 rounded-xl">
+        <div className="lg:col-span-4 xl:col-span-5  p-6 rounded-xl pt-0">
           <InfiniteProductList filters={filters} />
         </div>
 
         {/* Desktop Sidebar */}
         <aside className="hidden lg:block lg:col-span-2 xl:col-span-2">
-          <div className="sticky top-28 bg-white p-6 rounded-xl shadow-md">
+          <div className="sticky top-24 bg-white p-6 rounded-xl shadow-md">
             <h3 className="text-xl font-semibold mb-4 text-[#4F46E5]">Filter Products</h3>
             <FilterSearch onFilterChange={handleFilterChange} />
           </div>
