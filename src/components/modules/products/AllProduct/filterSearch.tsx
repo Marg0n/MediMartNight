@@ -83,45 +83,47 @@ const FilterSearch = ({
         onChange={(e) => setSearchTerm(e.target.value)}
       />
 
-      {/* Category Filter */}
-      <div>
-        <label className="block text-lg font-semibold mb-2">
-          🧪 Categories
-        </label>
-        <div className="min-h-40 space-y-1">
-          {categories.map((category) => (
-            <label key={category} className="flex items-center space-x-2 text-sm">
-              <input
-                type="checkbox"
-                checked={selectedCategories.includes(category)}
-                onChange={() => handleCategorySelect(category)}
-                className="checkbox checkbox-sm"
-              />
-              <span>{category}</span>
-            </label>
-          ))}
+      <div className='flex justify-around'>
+        {/* Category Filter */}
+        <div>
+          <label className="block text-lg font-semibold mb-2">
+            🧪 Categories
+          </label>
+          <div className="min-h-40 space-y-1">
+            {categories.map((category) => (
+              <label key={category} className="flex items-center space-x-2 text-sm">
+                <input
+                  type="checkbox"
+                  checked={selectedCategories.includes(category)}
+                  onChange={() => handleCategorySelect(category)}
+                  className="checkbox checkbox-sm"
+                />
+                <span>{category}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        {/* Symptoms Filter */}
+        <div>
+          <label className="block text-lg font-semibold mb-2">💊 Symptoms</label>
+          <div className="min-h-40 space-y-1">
+            {symptoms.map((symptom) => (
+              <label key={symptom} className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  checked={selectedSymptoms.includes(symptom)}
+                  onChange={() => handleSymptomSelect(symptom)}
+                  className="checkbox checkbox-sm"
+                />
+                <span>{symptom}</span>
+              </label>
+            ))}
+          </div>        
         </div>
       </div>
 
-      {/* Symptoms Filter */}
-      <div>
-        <label className="block text-lg font-semibold mb-2">💊 Symptoms</label>
-        <div className="min-h-40 space-y-1">
-          {symptoms.map((symptom) => (
-            <label key={symptom} className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                checked={selectedSymptoms.includes(symptom)}
-                onChange={() => handleSymptomSelect(symptom)}
-                className="checkbox checkbox-sm"
-              />
-              <span>{symptom}</span>
-            </label>
-          ))}
-        </div>
-      </div>
-
-      <div className="flex gap-4 justify-end">
+      <div className="flex flex-col gap-4 justify-end">
         <Button className="btn" variant="outline" onClick={handleApply}>
           ✅ Apply
         </Button>
