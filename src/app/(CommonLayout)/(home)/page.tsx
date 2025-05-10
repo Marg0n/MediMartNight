@@ -2,6 +2,7 @@ import FeaturedSection from "@/components/modules/home/FeaturedSection/FeaturedS
 import HeroSection from "@/components/modules/home/HeroSection";
 import NewArrival from "@/components/modules/home/NewArrival/NewArrival";
 import NewsletterForm from "@/components/modules/home/NewsLetter/NewsLetterForm";
+import OurPartners from "@/components/modules/home/Partners/OurPartners";
 import TestimonialSection from "@/components/modules/home/Testimonials/TestimonialSections";
 
 const HomePage = () => {
@@ -14,6 +15,7 @@ const HomePage = () => {
         <FeaturedSection/>
         <NewsletterForm/>
         <TestimonialSection/> 
+        <OurPartners/>
       </main>
       {/* <Footer /> */}
     </>

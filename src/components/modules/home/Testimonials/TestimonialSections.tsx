@@ -80,9 +80,9 @@ const testimonials = [
 
 const TestimonialSection = () => {
   return (
-    <section className=" px-4 md:px-0 bg-gradient-to-b from-white via-[#f9f9ff] to-white py-12">
+    <section className=" px-4 md:px-0 bg-gradient-to-b from-white via-[#f9f9ff] to-white py-12 mb-0">
       <div className="container mx-auto max-w-[90vw]">
-        <h2 className="text-4xl font-extrabold text-center mb-14 bg-gradient-to-r from-[#4F46E5] to-rose-500 bg-clip-text text-transparent tracking-wide">
+        <h2 className="text-4xl font-extrabold text-center mb-10 bg-gradient-to-r from-[#4F46E5] to-rose-500 bg-clip-text text-transparent tracking-wide">
           What People Say
         </h2>
 

@@ -19,7 +19,7 @@ const NewsletterForm = () => {
   };
 
   return (
-    <section className="container mx-auto px-4 w-full min-h-[60vh] rounded-4xl">
+    <section className="container mx-auto px-4 w-full min-h-[50vh] rounded-4xl">
       <h2 className="text-4xl font-extrabold text-center mb-10 bg-gradient-to-r from-indigo-600 to-rose-500 bg-clip-text text-transparent">
         Subscribe to Our Newsletter
       </h2>

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import React, { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -46,22 +47,22 @@ const NewArrival = () => {
         (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
       );
 
-      const filtered = sorted.filter((m) => m.updatedAt && m.Img);
+      const filtered = await sorted.filter((m) => m.updatedAt && m.Img);
 
       const topNew = filtered.slice(0, 10).map((medicine, index) => ({
         id: index + 1,
         imgSrc: medicine.Img || "",
-        name: medicine.name,
-        brand: medicine.brand,
-        price: medicine.price,
-        description: medicine.description,
-        genericName: medicine.genericName,
-        strength: medicine.strength,
-        dosCategory: medicine.dosCategory,
-        symptoms: medicine.symptoms,
-        requiredPrescription: medicine.requiredPrescription,
-        expiryDate: medicine.expiryDate,
-        updatedAt: medicine.updatedAt,
+        name: medicine.name || "",
+        brand: medicine.brand || "",
+        price: medicine.price || 0,
+        description: medicine.description || "",
+        genericName: medicine.genericName || "",
+        strength: medicine.strength || "",
+        dosCategory: medicine.dosCategory || "",
+        symptoms: medicine.symptoms || "",
+        requiredPrescription: medicine.requiredPrescription || "",
+        expiryDate: medicine.expiryDate || "",
+        updatedAt: medicine.updatedAt || "",
       }));
 
       setSlides(topNew);
