@@ -193,31 +193,25 @@ const NewArrival = () => {
             </div>
           </>
         ) : (
-          <div className="container mx-auto px-4 md:max-h-[60vh] mt-16 md:mb-12 animate-pulse">
-            <h2 className="text-4xl font-extrabold text-center mb-10 bg-gradient-to-r from-indigo-600 to-rose-500 bg-clip-text text-transparent">
-              New Arrivals
-            </h2>
+          <>
+            <div className="bg-gray-200 rounded-lg w-full md:w-1/3 h-56" />
 
-            <div className="relative w-full bg-white rounded-xl shadow-md p-6 flex flex-col md:flex-row items-center gap-6 md:max-h-[50vh]">
-              <div className="bg-gray-200 rounded-lg w-full md:w-1/3 h-56" />
-
-              <div className="w-full md:w-2/3 space-y-3 px-4">
-                <div className="bg-gray-200 h-6 w-3/4 rounded" />
-                <div className="bg-gray-200 h-4 w-1/2 rounded" />
-                <div className="bg-gray-300 h-5 w-20 rounded" />
+            <div className="w-full md:w-2/3 space-y-3 px-4">
+              <div className="bg-gray-200 h-6 w-3/4 rounded" />
+              <div className="bg-gray-200 h-4 w-1/2 rounded" />
+              <div className="bg-gray-300 h-5 w-20 rounded" />
+              <div className="bg-gray-200 h-4 w-full rounded" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 mt-2">
                 <div className="bg-gray-200 h-4 w-full rounded" />
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 mt-2">
-                  <div className="bg-gray-200 h-4 w-full rounded" />
-                  <div className="bg-gray-200 h-4 w-full rounded" />
-                  <div className="bg-gray-200 h-4 w-full rounded" />
-                  <div className="bg-gray-200 h-4 w-full rounded" />
-                  <div className="bg-gray-200 h-4 w-full rounded" />
-                  <div className="bg-gray-200 h-4 w-full rounded" />
-                </div>
-                <div className="bg-gray-100 h-3 w-1/3 rounded mt-2" />
+                <div className="bg-gray-200 h-4 w-full rounded" />
+                <div className="bg-gray-200 h-4 w-full rounded" />
+                <div className="bg-gray-200 h-4 w-full rounded" />
+                <div className="bg-gray-200 h-4 w-full rounded" />
+                <div className="bg-gray-200 h-4 w-full rounded" />
               </div>
+              <div className="bg-gray-100 h-3 w-1/3 rounded mt-2" />
             </div>
-          </div>
+          </>
         )}
 
         <ChevronRight
