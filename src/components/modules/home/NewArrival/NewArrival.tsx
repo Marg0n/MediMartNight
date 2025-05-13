@@ -43,6 +43,8 @@ const NewArrival = () => {
 
       const newProducts = res?.data?.result || [];
 
+      // console.log(res)
+
       const sorted = [...newProducts].sort(
         (a, b) =>
           new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
@@ -82,12 +84,22 @@ const NewArrival = () => {
     fetchProducts();
   }, []);
 
+  // useEffect(() => {
+  //   const autoSlide = setInterval(() => {
+  //     setCurrentSlide((prev) => (prev + 1) % slides.length);
+  //   }, 3000);
+  //   return () => clearInterval(autoSlide);
+  // }, [slides.length]);
+
   useEffect(() => {
+  if (slides.length === 0) return;
+
     const autoSlide = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 3000);
+
     return () => clearInterval(autoSlide);
-  }, [slides.length]);
+  }, [slides]);
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
