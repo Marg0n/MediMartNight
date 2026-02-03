@@ -76,6 +76,15 @@ export function PendingVsTotalPieChart({
     return months;
   };
 
+  //! 🔥 CHANGE 1: helper to safely create empty stats
+  const createEmptyStats = () => ({
+    PENDING: 0,
+    PROCESSING: 0,
+    SHIPPED: 0,
+    DELIVERED: 0,
+    CANCELLED: 0,
+  });
+
   // Group orders by month and tally counts
   const monthlyStats: Record<
     string,
@@ -90,40 +99,81 @@ export function PendingVsTotalPieChart({
 
   // Initialize all months with zero counts
   getAllMonths().forEach((month) => {
-    monthlyStats[month] = {
-      PENDING: 0,
-      PROCESSING: 0,
-      SHIPPED: 0,
-      DELIVERED: 0,
-      CANCELLED: 0,
-    };
+    monthlyStats[month] = createEmptyStats();
   });
 
+  // Initialize all months with zero counts
+  // getAllMonths().forEach((month) => {
+  //   monthlyStats[month] = {
+  //     PENDING: 0,
+  //     PROCESSING: 0,
+  //     SHIPPED: 0,
+  //     DELIVERED: 0,
+  //     CANCELLED: 0,
+  //   };
+  // });
+
+  // orders.forEach((order) => {
+
+  //   if (!order.createdAt) return; //! 🔥 CHANGE 2: guard against missing dates
+
+  //   const date = new Date(order.createdAt as string);
+  //   const monthKey = date.toLocaleDateString("en-US", {
+  //     year: "numeric",
+  //     month: "long",
+  //   });
+
+  //   //! 🔥 CHANGE 3: GUARANTEE the month exists before using it
+  //   if (!monthlyStats[monthKey]) {
+  //     monthlyStats[monthKey] = createEmptyStats();
+  //   }
+
+  //   switch (order.shippingStatus) {
+  //     case "PENDING":
+  //       monthlyStats[monthKey].PENDING += 1;
+  //       break;
+  //     case "PROCESSING":
+  //       monthlyStats[monthKey].PROCESSING += 1;
+  //       break;
+  //     case "SHIPPED":
+  //       monthlyStats[monthKey].SHIPPED += 1;
+  //       break;
+  //     case "DELIVERED":
+  //       monthlyStats[monthKey].DELIVERED += 1;
+  //       break;
+  //     case "CANCELLED":
+  //       monthlyStats[monthKey].CANCELLED += 1;
+  //       break;
+  //   }
+  // });
+
   orders.forEach((order) => {
-    const date = new Date(order.createdAt as string);
+    // 🔥 HARD GUARD: invalid or missing dates
+    if (!order.createdAt) return;
+
+    const date = new Date(order.createdAt);
+    if (isNaN(date.getTime())) return; // 🔥 prevents "Invalid Date"
+
     const monthKey = date.toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
     });
 
-    switch (order.shippingStatus) {
-      case "PENDING":
-        monthlyStats[monthKey].PENDING += 1;
-        break;
-      case "PROCESSING":
-        monthlyStats[monthKey].PROCESSING += 1;
-        break;
-      case "SHIPPED":
-        monthlyStats[monthKey].SHIPPED += 1;
-        break;
-      case "DELIVERED":
-        monthlyStats[monthKey].DELIVERED += 1;
-        break;
-      case "CANCELLED":
-        monthlyStats[monthKey].CANCELLED += 1;
-        break;
-    }
+    // 🔥 ALWAYS get a valid bucket
+    const bucket =
+      monthlyStats[monthKey] ?? (monthlyStats[monthKey] = createEmptyStats());
+
+    // 🔥 NO switch, NO hard-coded .PROCESSING access
+    bucket[order.shippingStatus] += 1;
   });
+
+  //! debugging
+  console.log(
+    "BAD ORDER:",
+    orders.filter(o => !o.createdAt || isNaN(new Date(o.createdAt).getTime()))
+  );
+
+
 
   const chartData = Object.entries(monthlyStats)
     .map(([month, stats]) => ({
