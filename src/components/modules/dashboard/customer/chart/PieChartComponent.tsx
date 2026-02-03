@@ -94,6 +94,15 @@ export function PieChartComponent({ orders = [] }: { orders?: IOrderDB[] }) {
     return months;
   };
 
+  //! Helper to safely create empty stats
+    const createEmptyStats = () => ({
+      PENDING: 0,
+      PROCESSING: 0,
+      SHIPPED: 0,
+      DELIVERED: 0,
+      CANCELLED: 0,
+    });
+
   // Group orders by month and tally counts
   const monthlyStats: Record<
     string,
@@ -108,13 +117,7 @@ export function PieChartComponent({ orders = [] }: { orders?: IOrderDB[] }) {
 
   // Initialize all months with zero counts
   getAllMonths().forEach((month) => {
-    monthlyStats[month] = {
-      PENDING: 0,
-      PROCESSING: 0,
-      SHIPPED: 0,
-      DELIVERED: 0,
-      CANCELLED: 0,
-    };
+    monthlyStats[month] = createEmptyStats();
   });
 
   // Only process orders if they exist
@@ -123,28 +126,37 @@ export function PieChartComponent({ orders = [] }: { orders?: IOrderDB[] }) {
       if (!order?.createdAt || !order?.shippingStatus) return;
 
       const date = new Date(order.createdAt);
+      if (isNaN(date.getTime())) return; //? prevents "Invalid Date"
+      
       const monthKey = date.toLocaleDateString("en-US", {
         year: "numeric",
         month: "long",
       });
 
-      switch (order.shippingStatus) {
-        case "PENDING":
-          monthlyStats[monthKey].PENDING += 1;
-          break;
-        case "PROCESSING":
-          monthlyStats[monthKey].PROCESSING += 1;
-          break;
-        case "SHIPPED":
-          monthlyStats[monthKey].SHIPPED += 1;
-          break;
-        case "DELIVERED":
-          monthlyStats[monthKey].DELIVERED += 1;
-          break;
-        case "CANCELLED":
-          monthlyStats[monthKey].CANCELLED += 1;
-          break;
-      }
+      //? ALWAYS get a valid bucket
+      const bucket =
+        monthlyStats[monthKey] ?? (monthlyStats[monthKey] = createEmptyStats());
+
+      //? NO switch, NO hard-coded .PROCESSING access
+      bucket[order.shippingStatus] += 1;
+
+      // switch (order.shippingStatus) {
+      //   case "PENDING":
+      //     monthlyStats[monthKey].PENDING += 1;
+      //     break;
+      //   case "PROCESSING":
+      //     monthlyStats[monthKey].PROCESSING += 1;
+      //     break;
+      //   case "SHIPPED":
+      //     monthlyStats[monthKey].SHIPPED += 1;
+      //     break;
+      //   case "DELIVERED":
+      //     monthlyStats[monthKey].DELIVERED += 1;
+      //     break;
+      //   case "CANCELLED":
+      //     monthlyStats[monthKey].CANCELLED += 1;
+      //     break;
+      // }
     });
   }
 

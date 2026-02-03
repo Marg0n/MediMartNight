@@ -76,7 +76,7 @@ export function PendingVsTotalPieChart({
     return months;
   };
 
-  //! 🔥 CHANGE 1: helper to safely create empty stats
+  //* Helper to safely create empty stats
   const createEmptyStats = () => ({
     PENDING: 0,
     PROCESSING: 0,
@@ -115,7 +115,7 @@ export function PendingVsTotalPieChart({
 
   // orders.forEach((order) => {
 
-  //   if (!order.createdAt) return; //! 🔥 CHANGE 2: guard against missing dates
+  //   if (!order.createdAt) return; //! Guard against missing dates
 
   //   const date = new Date(order.createdAt as string);
   //   const monthKey = date.toLocaleDateString("en-US", {
@@ -123,7 +123,7 @@ export function PendingVsTotalPieChart({
   //     month: "long",
   //   });
 
-  //   //! 🔥 CHANGE 3: GUARANTEE the month exists before using it
+  //   //! GUARANTEE check the month exists before using it
   //   if (!monthlyStats[monthKey]) {
   //     monthlyStats[monthKey] = createEmptyStats();
   //   }
@@ -148,22 +148,22 @@ export function PendingVsTotalPieChart({
   // });
 
   orders.forEach((order) => {
-    // 🔥 HARD GUARD: invalid or missing dates
+    //? HARD GUARD: invalid or missing dates
     if (!order.createdAt) return;
 
     const date = new Date(order.createdAt);
-    if (isNaN(date.getTime())) return; // 🔥 prevents "Invalid Date"
+    if (isNaN(date.getTime())) return; //? prevents "Invalid Date"
 
     const monthKey = date.toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
     });
 
-    // 🔥 ALWAYS get a valid bucket
+    //? ALWAYS get a valid bucket
     const bucket =
       monthlyStats[monthKey] ?? (monthlyStats[monthKey] = createEmptyStats());
 
-    // 🔥 NO switch, NO hard-coded .PROCESSING access
+    //? NO switch, NO hard-coded .PROCESSING access
     bucket[order.shippingStatus] += 1;
   });
 
