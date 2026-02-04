@@ -37,6 +37,13 @@ const ProductDetails = async ({ medicine }: { medicine: TMedicine }) => {
   //     router.push(``);
   //   }
 
+  //* Date format view option e.g. 25 Feb 2026
+  const options: Intl.DateTimeFormatOptions = { 
+    day: '2-digit', 
+    month: 'short', // 'long', 'short', 'numeric', '2-digit'
+    year: 'numeric' 
+  };
+
   return (
     <div className="container mx-auto px-4 py-6">
       {/* Main Product Section */}
@@ -84,32 +91,38 @@ const ProductDetails = async ({ medicine }: { medicine: TMedicine }) => {
           {/* Extra Info */}
           <div className="text-sm text-gray-700 space-y-1">
             <p>
-              <strong>🏷️Brand: </strong> {medicine?.brand}
+              <strong>🏷️ Brand: </strong> {medicine?.brand}
             </p>
             <p>
-              <strong>💪Healthcare Pharmaceuticals Strength: </strong>{" "}
+              <strong>💪 Healthcare Pharmaceuticals Strength: </strong>{" "}
               {medicine?.strength}
             </p>
             <p>
-              <strong>💊Dosage Form:</strong> {medicine?.dosCategory}
+              <strong>💊 Dosage Form:</strong> {medicine?.dosCategory}
             </p>
             <p>
-              <strong>📦Quantity: </strong> {medicine?.quantity} pcs
+              <strong>📦 Quantity: </strong> {medicine?.quantity} pcs
             </p>
             <p>
-              <strong>📝Prescription Required:</strong>{" "}
+              <strong>📝 Prescription Required:</strong>{" "}
               {medicine?.requiredPrescription}
             </p>
             <p className="flex items-center gap-2">
-              <CalendarDays className="w-4 h-4" /> Expiry:{" "}
-              {new Date(medicine?.expiryDate).toLocaleDateString()}
+                <CalendarDays className="w-4 h-4" /> 
+              <strong>                
+                Expiry:{" "}
+              </strong>
+              {new Date(medicine?.expiryDate).toLocaleDateString( 'en-GB', options )}
             </p>
             <p className="flex items-center gap-2">
-              <Warehouse className="w-4 h-4" /> Availability:{" "}
+                <Warehouse className="w-4 h-4" /> 
+              <strong>
+                Availability:{" "}
+              </strong>
               {medicine?.inStock ? "In Stock" : "Out of Stock"}
             </p>
             <p>
-              <strong>Manufacturer:</strong> {medicine?.manufacturerDetails}
+              <strong>🔬 Manufacturer:</strong> {medicine?.manufacturerDetails}
             </p>
           </div>
 
