@@ -40,10 +40,11 @@ const nextConfig: NextConfig = {
       bodySizeLimit:'5mb',
     },
   },
-  webpack: (config) => {
-    config.resolve.alias["@"] = path.resolve(__dirname, "src");
-    return config;
-  },
+  turbopack: {},
+  // webpack: (config) => {
+  //   config.resolve.alias["@"] = path.resolve(__dirname, "src");
+  //   return config;
+  // },
 };
 
 export default nextConfig;
