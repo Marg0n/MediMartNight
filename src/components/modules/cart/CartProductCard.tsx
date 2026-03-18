@@ -20,7 +20,7 @@ const CartProductCard = ({ product }: { product: CartProduct }) => {
           src={product?.Img as string}
           height={200}
           width={200}
-          alt={product.name}
+          alt={product.name || "user"}
           className="aspect-square object-cover"
         />
       </div>

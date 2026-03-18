@@ -73,7 +73,7 @@ const AboutSection = () => {
             <div className="w-full lg:w-1/2">
               <Image
                 src={section.image}
-                alt={section.title}
+                alt={section.title || "user"}
                 width={500}
                 height={400}
                 className="rounded-2xl shadow-md object-cover w-full h-full max-h-[400px]"

@@ -88,12 +88,12 @@ const UpdateUserProfilePage = () => {
       <div className="justify-center flex items-center gap-2  relative mb-20">
         <img
           src={"https://i.ibb.co.com/G2xCfZf/interior-design-mountain-view.jpg"} 
-          alt={user?.name} 
+          alt={user?.name || "user"} 
           className="w-full rounded-2xl h-68"
         />
         <Image 
           src={user?.image || "https://github.com/shadcn.png"} 
-          alt={user?.name} 
+          alt={user?.name || "user"} 
           width={100} 
           height={100} 
           className="rounded-full bg-cover w-32 h-32  absolute -bottom-10 border-2 border-[#4F46E5]"

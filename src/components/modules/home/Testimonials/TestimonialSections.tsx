@@ -110,7 +110,7 @@ const TestimonialSection = () => {
                     <div className="relative rounded-full overflow-hidden border-4 border-white shadow-lg w-full h-full ring-offset-2 ring-2">
                       <Image
                         src={t.image}
-                        alt={t.name}
+                        alt={t.name || "user"}
                         width={100}
                         height={100}
                         className="object-cover w-full h-full"

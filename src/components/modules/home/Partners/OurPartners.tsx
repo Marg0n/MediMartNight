@@ -32,7 +32,7 @@ const OurPartners = () => {
           <div key={idx} className="w-32 h-20 relative">
             <Image
               src={partner?.src}
-              alt={partner?.name}
+              alt={partner?.name || "partner"}
               layout="fill"
               objectFit="contain"
             />

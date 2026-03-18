@@ -35,7 +35,7 @@ const ProductCard = ({ medicine }: { medicine: TMedicine }) => {
           <div className="relative w-full h-40 overflow-hidden rounded-md group">
             <Image
               src={medicine?.Img as string}
-              alt={medicine?.name}
+              alt={medicine?.name || "medicine name"}
               fill
               sizes="(max-width: 768px) 100vw,
        (max-width: 1200px) 50vw,

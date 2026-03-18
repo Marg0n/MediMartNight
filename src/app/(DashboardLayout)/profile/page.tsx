@@ -35,14 +35,14 @@ const UserProfilePage = () => {
       <div className="justify-center flex items-center gap-2 relative mb-20">
         <img
           src="https://i.ibb.co.com/G2xCfZf/interior-design-mountain-view.jpg"
-          alt={user?.name}
+          alt={user?.name || "user"}
           className="w-full rounded-2xl h-68 object-fit"
         />
         <Image
           src={
             user?.image || "https://i.ibb.co.com/Fz38g1t/human-celebrating.png"
           }
-          alt={user?.name}
+          alt={user?.name || "user"}
           width={100}
           height={100}
           className="rounded-full w-32 h-32 absolute -bottom-10 border-2 border-[#4F46E5] shadow-lg"
