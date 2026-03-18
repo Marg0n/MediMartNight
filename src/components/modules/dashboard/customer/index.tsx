@@ -51,7 +51,7 @@ const UserDashboard = () => {
         PROCESSING: 0,
         SHIPPED: 0,
         DELIVERED: 0,
-        CANCELLED: 0,
+        CANCELED: 0,
       };
     }
 
@@ -69,8 +69,8 @@ const UserDashboard = () => {
       case "DELIVERED":
         acc[month].DELIVERED++;
         break;
-      case "CANCELLED":
-        acc[month].CANCELLED++;
+      case "CANCELED":
+        acc[month].CANCELED++;
         break;
     }
 
@@ -95,7 +95,7 @@ const UserDashboard = () => {
       .length,
     delivered: orders.filter((order) => order.shippingStatus === "DELIVERED")
       .length,
-    cancelled: orders.filter((order) => order.shippingStatus === "CANCELLED")
+    canceled: orders.filter((order) => order.shippingStatus === "CANCELED")
       .length,
   };
 

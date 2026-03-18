@@ -11,14 +11,14 @@ export interface IProductItem {
   inStock?: boolean;
 }
 
-export type ShippingStatus = "PENDING" | "SHIPPED" | "DELIVERED" | "CANCELLED"
+export type ShippingStatus = "PENDING" | "SHIPPED" | "DELIVERED" | "CANCELED"
 
 export interface IOrderDB {
   _id: string;
   products: IProductItem[];
   user: IUser;
   totalPrice: number;
-  shippingStatus: "PENDING" | "PROCESSING" | "SHIPPED" | "DELIVERED" | "CANCELLED";
+  shippingStatus: "PENDING" | "PROCESSING" | "SHIPPED" | "DELIVERED" | "CANCELED";
   paymentStatus: "PAID" | "UNPAID" | "REFUNDED";
   transactionId: string;
   isDeleted: boolean;

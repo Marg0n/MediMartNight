@@ -49,8 +49,8 @@ const chartConfig = {
     label: "Delivered Orders",
     color: "#10b981", // emerald
   },
-  CANCELLED: {
-    label: "Cancelled Orders",
+  CANCELED: {
+    label: "Canceled Orders",
     color: "#ef4444", // red
   },
 } satisfies ChartConfig;
@@ -82,7 +82,7 @@ export function PendingVsTotalPieChart({
     PROCESSING: 0,
     SHIPPED: 0,
     DELIVERED: 0,
-    CANCELLED: 0,
+    CANCELED: 0,
   });
 
   // Group orders by month and tally counts
@@ -93,7 +93,7 @@ export function PendingVsTotalPieChart({
       PROCESSING: number;
       SHIPPED: number;
       DELIVERED: number;
-      CANCELLED: number;
+      CANCELED: number;
     }
   > = {};
 
@@ -109,7 +109,7 @@ export function PendingVsTotalPieChart({
   //     PROCESSING: 0,
   //     SHIPPED: 0,
   //     DELIVERED: 0,
-  //     CANCELLED: 0,
+  //     CANCELED: 0,
   //   };
   // });
 
@@ -141,8 +141,8 @@ export function PendingVsTotalPieChart({
   //     case "DELIVERED":
   //       monthlyStats[monthKey].DELIVERED += 1;
   //       break;
-  //     case "CANCELLED":
-  //       monthlyStats[monthKey].CANCELLED += 1;
+  //     case "CANCELED":
+  //       monthlyStats[monthKey].CANCELED += 1;
   //       break;
   //   }
   // });
@@ -223,9 +223,9 @@ export function PendingVsTotalPieChart({
         fill: chartConfig.DELIVERED.color,
       },
       {
-        name: "Cancelled Orders",
-        value: selected.CANCELLED,
-        fill: chartConfig.CANCELLED.color,
+        name: "Canceled Orders",
+        value: selected.CANCELED,
+        fill: chartConfig.CANCELED.color,
       },
     ];
   }, [activeMonth, chartData]);

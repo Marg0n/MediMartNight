@@ -70,8 +70,8 @@ const chartConfig: ChartConfig = {
     label: "Delivered Orders",
     color: "#22c55e", // green
   },
-  CANCELLED: {
-    label: "Cancelled Orders",
+  CANCELED: {
+    label: "Canceled Orders",
     color: "#ef4444", // red
   },
 };
@@ -100,7 +100,7 @@ export function PieChartComponent({ orders = [] }: { orders?: IOrderDB[] }) {
       PROCESSING: 0,
       SHIPPED: 0,
       DELIVERED: 0,
-      CANCELLED: 0,
+      CANCELED: 0,
     });
 
   // Group orders by month and tally counts
@@ -111,7 +111,7 @@ export function PieChartComponent({ orders = [] }: { orders?: IOrderDB[] }) {
       PROCESSING: number;
       SHIPPED: number;
       DELIVERED: number;
-      CANCELLED: number;
+      CANCELED: number;
     }
   > = {};
 
@@ -153,8 +153,8 @@ export function PieChartComponent({ orders = [] }: { orders?: IOrderDB[] }) {
       //   case "DELIVERED":
       //     monthlyStats[monthKey].DELIVERED += 1;
       //     break;
-      //   case "CANCELLED":
-      //     monthlyStats[monthKey].CANCELLED += 1;
+      //   case "CANCELED":
+      //     monthlyStats[monthKey].CANCELED += 1;
       //     break;
       // }
     });
@@ -189,9 +189,9 @@ export function PieChartComponent({ orders = [] }: { orders?: IOrderDB[] }) {
         fill: chartConfig.DELIVERED.color,
       },
       {
-        label: "Cancelled Orders",
-        value: stats.CANCELLED,
-        fill: chartConfig.CANCELLED.color,
+        label: "Canceled Orders",
+        value: stats.CANCELED,
+        fill: chartConfig.CANCELED.color,
       },
     ];
   }, [activeMonth, monthlyStats]);

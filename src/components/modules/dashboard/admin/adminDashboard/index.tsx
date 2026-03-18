@@ -80,7 +80,7 @@ const AdminDashboard = () => {
       (order) => order.shippingStatus === "SHIPPED",
     ).length,
     canceled: orders?.data.filter(
-      (order) => order.shippingStatus === "CANCELLED",
+      (order) => order.shippingStatus === "CANCELED",
     ).length,
     delivered: orders?.data.filter(
       (order) => order.shippingStatus === "DELIVERED",
