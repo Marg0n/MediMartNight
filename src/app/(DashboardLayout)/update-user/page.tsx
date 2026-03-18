@@ -94,9 +94,9 @@ const UpdateUserProfilePage = () => {
         <Image 
           src={user?.image || "https://github.com/shadcn.png"} 
           alt={user?.name || "user"} 
-          width={100} 
-          height={100} 
-          className="rounded-full bg-cover w-32 h-32  absolute -bottom-10 border-2 border-[#4F46E5]"
+          width={128} // w-32
+          height={128} // h-32
+          className="rounded-full bg-cover absolute -bottom-10 border-2 border-[#4F46E5]"
         />
       </div>
 
