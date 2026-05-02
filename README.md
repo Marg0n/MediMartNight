@@ -179,7 +179,23 @@ The **Medicine E-Commerce Shop** is an online platform where users can browse, s
 <br/>
 <br/>
 
-## :wrench: Steps by steps commands to initialize the project:
+## Project setup
+
+```bash
+$ npm install
+```
+
+## Compile and run the project
+
+```bash
+# development
+$ npm run dev
+```
+
+<br/>
+<br/>
+
+## :wrench: Steps by steps commands taken to initialize the project template:
 
 - crate a next.js project
 
